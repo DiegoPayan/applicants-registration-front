@@ -1,0 +1,19 @@
+.w25{
+    width: 24%;
+}
+.w50{
+    width: 50%;
+}
+.form-edit{
+    height: 45%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding-top: 2%;
+    padding: 2% 2% 0% 2%;
+}
+.btn-edit{
+    width: 20%;
+    height: 20%;
+
+}
