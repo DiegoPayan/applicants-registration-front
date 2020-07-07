@@ -23,11 +23,10 @@ class List extends Component {
                 <div className="title-container flex-center">Lista de Aspirantes
        </div>
                 {!this.state.loading && <div className="container-list">
-                    <Button onClick={()=>this.props.history.push("/aspirante")} variant="contained" color="primary">Agregar aspirante</Button>
+                    <Button onClick={() => this.props.history.push("/aspirante")} variant="contained" color="primary">Agregar aspirante</Button>
                     <TableList
-                        rows={aspirantes.data.data}
                         headers={["Folio", "Nombre", "Listado", "Estatus", "Rama", "Estudios", "Puesto", "Zona", "Puntaje"]}>
-                        {aspirantes.data.data.map(row => (
+                        {aspirantes && aspirantes.data && aspirantes.data.map(row => (
                             <TableRow key={row.id}>
                                 <TableCell component="th" scope="row">
                                     {row.folio}
@@ -45,7 +44,7 @@ class List extends Component {
                                         variant="contained"
                                         color="primary"
                                         endIcon={<Edit />}
-                                        onClick={()=>this.props.history.push(`/aspirante/${row.id}`)}
+                                        onClick={() => this.props.history.push(`/aspirante/${row.id}`)}
                                     >
                                         Editar
                                     </Button>

@@ -3,12 +3,11 @@ import './App.css';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Login from './modules/usuarios/Login';
 import Container from './modules/usuarios/Container';
-import Edit from './modules/aspirantes/edit';
-import List from './modules/aspirantes/list';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { handleSnackbar } from "./modules/actions";
+import routes from './routes';
 
 
 function Alert(props) {
@@ -18,9 +17,10 @@ function Alert(props) {
 function Routes() {
   return (
     <Container>
-      <Route
-        path="/home"
-        component={List} />
+      {routes.map(item => <Route
+        path={item.path}
+        component={item.component} />)}
+      {/* 
       <Route
       exact
         path="/aspirante/:id"
@@ -28,7 +28,7 @@ function Routes() {
       <Route
       exact
         path="/aspirante"
-        component={Edit} />
+        component={Edit} /> */}
       <Redirect exact from="/" to="/home" />
     </Container>
   );

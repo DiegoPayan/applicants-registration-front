@@ -18,13 +18,13 @@ export const handleAuth = (clave) => async dispatch => {
 export const GetAspirantes = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/aspirantes/',   { headers:{'Authorization':`${localStorage.getItem("token")}`} });
+    response = await axios.get('/api/aspirantes/', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
   dispatch({
     type: GET_ASPIRANTES,
-    data: response
+    data: response.data
   });
   return response.data ? response.data : response.response.data
 }
@@ -32,7 +32,7 @@ export const GetAspirantes = () => async dispatch => {
 export const getAspiranteById = (id) => async dispatch => {
   let response;
   try {
-    response = await axios.get(`/api/aspirantes/${id}`,   { headers:{'Authorization':`${localStorage.getItem("token")}`} });
+    response = await axios.get(`/api/aspirantes/${id}`, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -44,9 +44,9 @@ export const getAspiranteById = (id) => async dispatch => {
 }
 
 export const handleSnackbar = (props) => async dispatch => {
-   dispatch({
+  dispatch({
     type: HANDLE_SNACKBAR,
     data: props
   });
 }
-  
+
