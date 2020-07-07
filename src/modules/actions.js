@@ -23,7 +23,7 @@ export const GetAspirantes = () => async dispatch => {
     response = error
   }
   dispatch({
-    type: GET_ASPIRANTES,
+    type: types.GET_ASPIRANTES,
     data: response.data
   });
   return response.data ? response.data : response.response.data
