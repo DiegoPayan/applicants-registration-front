@@ -1,10 +1,13 @@
-import { AUTH, HANDLE_SNACKBAR, GET_ASPIRANTES,GET_ASPIRANTE_BY_ID } from './actionTypes';
+import * as types from './actionTypes';
 
 const initialState = {
   aspirantes: undefined,
   aspiranteById: undefined,
   auth: undefined,
-  snackbar: {}
+  snackbar: {},
+  ramas: undefined,
+  estudios: undefined,
+  puestos: undefined
 };
 
 const usuarios = (state, action) => {
@@ -12,19 +15,31 @@ const usuarios = (state, action) => {
     return initialState
   }
   switch (action.type) {
-    case GET_ASPIRANTES:
+    case types.GET_ASPIRANTES:
       return Object.assign({}, state, {
         aspirantes: action.data
       });
-    case AUTH:
+    case types.AUTH:
       return Object.assign({}, state, {
         auth: action.data
       });
-    case GET_ASPIRANTE_BY_ID:
+    case types.GET_RAMAS:
+      return Object.assign({}, state, {
+        ramas: action.data
+      });
+    case types.GET_ESTUDIOS:
+      return Object.assign({}, state, {
+        estudios: action.data
+      });
+    case types.GET_PUESTOS:
+      return Object.assign({}, state, {
+        puestos: action.data
+      });
+    case types.GET_ASPIRANTE_BY_ID:
       return Object.assign({}, state, {
         aspiranteById: action.data
       });
-    case HANDLE_SNACKBAR:
+    case types.HANDLE_SNACKBAR:
       return Object.assign({}, state, {
         snackbar: action.data
       });
