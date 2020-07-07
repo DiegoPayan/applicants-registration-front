@@ -158,11 +158,7 @@ export const updatePuesto = (id, puesto) => async () => {
 
 export const handleSnackbar = (props) => async dispatch => {
   dispatch({
-<<<<<<< HEAD
-    type: HANDLE_SNACKBAR,
-=======
     type: types.HANDLE_SNACKBAR,
->>>>>>> d629b99bc85fd7f1b9998b2b537a6b5adf23d682
     data: props
   });
 }
