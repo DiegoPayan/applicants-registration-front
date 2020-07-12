@@ -37,8 +37,8 @@ const Container = (props) => {
   const onSelect = ({ currentTarget: { id } }) => {
     setSelected(id)
     const ruta = routes.filter(item => item.id === id);
-    setTitle(ruta[0].name)
-    history.push(ruta[0].path)
+    setTitle(ruta[0] ? ruta[0].name : "")
+    history.push(ruta[0] ? ruta[0].path : "")
   }
 
   const arrayList = [{ name: "Listados", img: <ListA />, onClick: (e) => onSelect(e) }, { name: "Aspirantes", img: <Person />, onClick: (e) => onSelect(e) }, { name: "Nivel de estudios", img: <Estudio />, onClick: (e) => onSelect(e) }, { name: "Ramas", img: <Rama />, onClick: (e) => onSelect(e) }, { name: "Puestos", img: <Puesto />, onClick: (e) => onSelect(e) }, { name: "Configuración", img: <Settings />, onClick: (e) => onSelect(e) },]
