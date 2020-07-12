@@ -1,19 +1,52 @@
-.w25{
-    width: 24%;
+.card-container-edit {
+  display: grid;
+  grid-auto-columns: 35% 63%;
+  grid-auto-rows: 17% 81%;
+  grid-template-areas:
+    "name name"
+    "zone points";
+  grid-gap: 2%;
 }
-.w50{
-    width: 50%;
-}
-.form-edit{
-    height: 45%;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    padding-top: 2%;
-    padding: 2% 2% 0% 2%;
-}
-.btn-edit{
-    width: 20%;
-    height: 20%;
 
+.card-name {
+  grid-area: name;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.card-zone {
+  grid-area: zone;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 5%;
+}
+.card-points {
+  grid-area: points;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+.txt-name {
+  width: 50%;
+}
+.txt-ponts {
+  width: 30%;
+}
+.total-points {
+  width: 100%;
+  height: 55%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.txt-color-gray {
+  color: #787575;
+}
+.txt-color-gray > span {
+  color: black;
 }

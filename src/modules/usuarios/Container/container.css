@@ -8,10 +8,7 @@
     "sidebar header"
     "sidebar container";
 }
-.card-container {
-  margin: 0 1em;
-  grid-area: container;
-}
+
 .header {
   grid-area: header;
   width: 100%;
@@ -104,4 +101,11 @@
 
 .flex-end-self {
   align-self: flex-end;
+}
+.background-card {
+  background: #f9f9f9;
+}
+.card-container {
+  height: 90%;
+  margin-top: 2%;
 }

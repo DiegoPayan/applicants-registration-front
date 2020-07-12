@@ -24,11 +24,11 @@ const Container = (props) => {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    const ruta = routes.filter(item => item.path === window.location.pathname);
+    const ruta = routes.filter(item => item.path === window.location.pathname.replace(/\d+/g, ":id"));
     setTitle(ruta[0].name)
     setSelected(ruta[0].id)
   }
-    , []);
+    , [props]);
 
   const onSelect = ({ currentTarget: { id } }) => {
     setSelected(id)
@@ -37,7 +37,7 @@ const Container = (props) => {
     history.push(ruta[0].path)
   }
 
-  const arrayList = [{ name: "Listados", img: <ListA />, onClick: (e) => onSelect(e) }, { name: "Aspirantes", img: <Person />, onClick: (e) => onSelect(e) }, { name: "Nivel de estudios", img: <Estudio />, onClick: (e) => onSelect(e) }, { name: "Ramas", img: <Rama />, onClick: (e) => onSelect(e) }, { name: "Puesto", img: <Puesto />, onClick: (e) => onSelect(e) }, { name: "Configuración", img: <Settings />, onClick: (e) => onSelect(e) },]
+  const arrayList = [{ name: "Listados", img: <ListA />, onClick: (e) => onSelect(e) }, { name: "Aspirantes", img: <Person />, onClick: (e) => onSelect(e) }, { name: "Nivel de estudios", img: <Estudio />, onClick: (e) => onSelect(e) }, { name: "Ramas", img: <Rama />, onClick: (e) => onSelect(e) }, { name: "Puestos", img: <Puesto />, onClick: (e) => onSelect(e) }, { name: "Configuración", img: <Settings />, onClick: (e) => onSelect(e) },]
   const sideList = () => (
     <div
       className=""
@@ -93,7 +93,7 @@ const Container = (props) => {
 
         <IconButton className="btn-log-out" ><MT /></IconButton>
       </AppBar>
-      <div className="card card-container">
+      <div className="card background-card">
         {props.children}
       </div>
       <Drawer open={state} onClose={toggleDrawer()} className="sidebar-expanded">

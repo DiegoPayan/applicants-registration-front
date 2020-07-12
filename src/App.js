@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './modules/usuarios/Login';
 import Container from './modules/usuarios/Container';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -8,7 +8,9 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { handleSnackbar } from "./modules/actions";
 import routes from './routes';
-
+import moment from 'moment';
+import 'moment/locale/es';
+moment.locale('es');
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -17,19 +19,10 @@ function Alert(props) {
 function Routes() {
   return (
     <Container>
-      {routes.map(item => <Route
+      {routes.map((item, key) => <Route key={key}
         path={item.path}
+        exact
         component={item.component} />)}
-      {/* 
-      <Route
-      exact
-        path="/aspirante/:id"
-        component={Edit} />
-      <Route
-      exact
-        path="/aspirante"
-        component={Edit} /> */}
-      <Redirect exact from="/" to="/home" />
     </Container>
   );
 

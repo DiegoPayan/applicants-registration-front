@@ -5,3 +5,4 @@ export const HANDLE_SNACKBAR = 'HANDLE_SNACKBAR';
 export const GET_RAMAS = 'GET_RAMAS';
 export const GET_ESTUDIOS = 'GET_ESTUDIOS';
 export const GET_PUESTOS = 'GET_PUESTOS';
+export const GET_ZONAS = 'GET_ZONAS';

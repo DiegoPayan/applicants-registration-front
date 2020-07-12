@@ -7,7 +7,8 @@ const initialState = {
   snackbar: {},
   ramas: undefined,
   estudios: undefined,
-  puestos: undefined
+  puestos: undefined,
+  zonas: undefined
 };
 
 const usuarios = (state, action) => {
@@ -38,6 +39,10 @@ const usuarios = (state, action) => {
     case types.GET_ASPIRANTE_BY_ID:
       return Object.assign({}, state, {
         aspiranteById: action.data
+      });
+    case types.GET_ZONAS:
+      return Object.assign({}, state, {
+        zonas: action.data
       });
     case types.HANDLE_SNACKBAR:
       return Object.assign({}, state, {
