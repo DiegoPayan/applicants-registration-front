@@ -23,35 +23,35 @@ const routes = [
         id: "Nuevo aspirante",
         path: "/agregar/aspirante",
         component: Edit,
-
+        arrow: "/home"
     },
     {
         name: "Editar aspirante",
         id: "Editar",
         path: "/editar/aspirante/:id",
         component: Edit,
-
+        arrow: "/home"
     },
     {
         name: "Listado de Niveles de estudio",
         id: "Nivel de estudios",
         path: "/niveles/estudio",
         component: StudiesList,
-
+        arrow: "/home"
     },
     {
         name: "Listado de Ramas",
         id: "Ramas",
         path: "/niveles/ramas",
         component: BranchesList,
-
+        arrow: "/home"
     },
     {
         name: "Listado de Puestos",
         id: "Puestos",
         path: "/niveles/puestos",
         component: PositionsList,
-
+        arrow: "/home"
     }
 ]
 

@@ -12,6 +12,7 @@ import Estudio from '@material-ui/icons/Ballot';
 import Rama from '@material-ui/icons/Timeline';
 import MT from '@material-ui/icons/MeetingRoom';
 import Settings from '@material-ui/icons/Settings';
+import Back from '@material-ui/icons/KeyboardBackspace';
 import "./container.css"
 import routes from '../../../routes';
 import { useHistory } from 'react-router-dom';
@@ -22,11 +23,14 @@ const Container = (props) => {
   const [state, setState] = useState(false);
   const [selected, setSelected] = useState("");
   const [title, setTitle] = useState("");
+  const [arrow, setArrow] = useState(false);
+
 
   useEffect(() => {
     const ruta = routes.filter(item => item.path === window.location.pathname.replace(/\d+/g, ":id"));
-    setTitle(ruta[0].name)
-    setSelected(ruta[0].id)
+    setTitle(ruta[0] ? ruta[0].name : "")
+    setSelected(ruta[0] ? ruta[0].id : "")
+    setArrow(ruta[0] ? ruta[0].arrow || false : "")
   }
     , [props]);
 
@@ -54,7 +58,7 @@ const Container = (props) => {
         )}
       </div>
 
-      <IconButton className="btn-log-out" ><MT /> <span className="span-btn-sb">Cerrar Sesión</span></IconButton>
+      <IconButton className="btn-log-out" onClick={logOut} ><MT /> <span className="span-btn-sb">Cerrar Sesión</span></IconButton>
     </div>
   );
 
@@ -65,13 +69,19 @@ const Container = (props) => {
 
     setState(!state);
   };
+  const logOut = () => {
+    localStorage.clear();
+    history.push("/login")
+  }
 
   return (
     <div className="container">
       <AppBar position="static" className="header">
         <Toolbar>
-
           <Typography variant="h6" className="title-header">
+            {arrow && <IconButton onClick={() => history.push(arrow)} edge="start" className="flex-end-self" color="white" aria-label="menu">
+              <Back style={{ color: "white" }} />
+            </IconButton>}
             {title}
           </Typography>
           <div variant="h6" className="name-and-rol">
@@ -91,7 +101,7 @@ const Container = (props) => {
           )}
         </div>
 
-        <IconButton className="btn-log-out" ><MT /></IconButton>
+        <IconButton className="btn-log-out" onClick={logOut} ><MT /></IconButton>
       </AppBar>
       <div className="card background-card">
         {props.children}
