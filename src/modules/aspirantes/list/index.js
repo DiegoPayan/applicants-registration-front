@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getAspirantes } from "../../actions";
+import { getAspirantes, download } from "../../actions";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/DeleteForever';
@@ -56,10 +56,11 @@ class List extends Component {
 
     render() {
         const { aspirantes, loading, removeId, reason } = this.state;
+        //this.props.history.push("/agregar/aspirante")
         return (
             <Fragment>
                 <div className="container-btn-action">
-                    <Button variant="outlined" color="primary" onClick={() => this.props.history.push("/agregar/aspirante")} className="btn-action" >Agregar aspirante      </Button></div>
+                    <Button variant="outlined" color="primary" onClick={() => { this.props.download(); }} className="btn-action" >Agregar aspirante      </Button></div>
                 <div className="card card-container">
                     <PaginatedTable
                         title="Aspirantes"
@@ -81,6 +82,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
     return {
         getAspirantes: () => { return getAspirantes()(dispatch) },
+        download: () => { return download()(dispatch) },
     }
 }
 export default connect(

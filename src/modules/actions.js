@@ -1,5 +1,7 @@
 import axios from 'axios';
 import * as types from './actionTypes.js';
+import { saveAs } from 'file-saver';
+
 
 export const handleAuth = (clave) => async dispatch => {
   let response;
@@ -172,6 +174,25 @@ export const getZonas = () => async dispatch => {
   return response.data ? response.data : response.response.data
 }
 
+export const download = () => async dispatch => {
+  let response;
+  try {
+    response = await axios.get('/api/aspirantes/lista/ordenada/descarga?subcomision=HOSPITAL REGIONAL&tipoLista=puntuacion', {
+      responseType: 'blob',
+      headers: {
+        'Authorization': `${localStorage.getItem("token")}`, 'Content-Type': 'application/vnd.openxmlformats',
+        "Content-Disposition": "attachment; filename=" + "Report.xlsx", "responseType": 'blob'
+      }
+    });
+  } catch (error) {
+    response = error
+  }
+  var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  saveAs(blob, 'reporte.xlsx');
+  response = response.data ? response.data : response.response.data
+
+  return response
+}
 export const handleSnackbar = (props) => async dispatch => {
   dispatch({
     type: types.HANDLE_SNACKBAR,
@@ -186,14 +207,13 @@ axios.interceptors.response.use((response) => {
   if (error.response.status === 401) {
     return await axios.post('/api/auth/refresh', { token: localStorage.getItem("token") })
       .then(async response => {
-        console.log(response);
         if (response.status === 200) {
-          localStorage.setItem('token', response.data.data);
-          originalRequest.headers.authorization = response.data.data;
+          localStorage.setItem('token', response.data.token.data);
+          originalRequest.headers.Authorization = response.data.token.data;
+
           return await axios(originalRequest);
         }
       }).catch((err) => {
-        console.log(err.response);
         if (err.response && err.response.config.url === '/api/auth/refresh' && err.response.status >= 400) {
           return err.response;
         }
