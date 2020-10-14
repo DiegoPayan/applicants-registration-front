@@ -28,6 +28,8 @@ const Container = (props) => {
 
   useEffect(() => {
     const ruta = routes.filter(item => item.path === window.location.pathname.replace(/\d+/g, ":id"));
+    console.log(ruta);
+
     setTitle(ruta[0] ? ruta[0].name : "")
     setSelected(ruta[0] ? ruta[0].id : "")
     setArrow(ruta[0] ? ruta[0].arrow || false : "")
@@ -41,7 +43,7 @@ const Container = (props) => {
     history.push(ruta[0] ? ruta[0].path : "")
   }
 
-  const arrayList = [{ name: "Listados", img: <ListA />, onClick: (e) => onSelect(e) }, { name: "Aspirantes", img: <Person />, onClick: (e) => onSelect(e) }, { name: "Nivel de estudios", img: <Estudio />, onClick: (e) => onSelect(e) }, { name: "Ramas", img: <Rama />, onClick: (e) => onSelect(e) }, { name: "Puestos", img: <Puesto />, onClick: (e) => onSelect(e) }, { name: "Configuración", img: <Settings />, onClick: (e) => onSelect(e) },]
+  const arrayList = [{ name: "Descarga", img: <ListA />, onClick: (e) => onSelect(e) }, { name: "Listados", img: <Person />, onClick: (e) => onSelect(e) }, { name: "Nivel de estudios", img: <Estudio />, onClick: (e) => onSelect(e) }, { name: "Ramas", img: <Rama />, onClick: (e) => onSelect(e) }, { name: "Puestos", img: <Puesto />, onClick: (e) => onSelect(e) }, { name: "Configuración", img: <Settings />, onClick: (e) => onSelect(e) },]
   const sideList = () => (
     <div
       className=""

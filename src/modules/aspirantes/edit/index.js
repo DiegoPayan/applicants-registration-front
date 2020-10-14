@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import SelectMenu from '../../../components/Select';
-import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas } from "../../actions";
+import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas, getFolio } from "../../actions";
 import { connect } from 'react-redux';
 import { numericCharacters, camelizeString } from "../../../utils"
 import moment from 'moment';
@@ -24,7 +24,11 @@ class Edit extends Component {
 
     if (match.params && match.params.id) {
       await getAspiranteById(match.params.id);
-
+    } else {
+      const folio = await this.props.getFolio();
+      if (folio && typeof folio == "string") {
+        this.setState({ folio })
+      }
     }
     await this.props.getEstudios();
     await this.props.getPuestos();
@@ -36,9 +40,11 @@ class Edit extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+
     const { aspirante } = nextProps
     if (this.props.aspirante !== aspirante && aspirante && aspirante.data && aspirante.status === 200) {
-      const { puntaje: { escolaridad, tiempoServicio, tiempoRegistro, parentesco }, aspirante: { id, folio, fecha, apellidoPaterno, nombre, apellidoMaterno, idEstudios, idRama, idPuesto, idZona, listado } } = aspirante.data;
+      const { puntaje: { escolaridad, tiempoServicio, tiempoRegistro, parentesco }, id, folio, fecha, apellidoPaterno, nombre, apellidoMaterno, idEstudios, idRama, idPuesto, idZona, listado } = aspirante.data;
       this.setState({
         folio: folio, id: parseInt(id), birthday: moment(fecha).format("YYYY-MM-DD"), name: nombre, maternal: apellidoMaterno, paternal: apellidoPaterno, studies: idEstudios, branch: idRama, position: idPuesto, zone: idZona, list: listado, scholarship: escolaridad, relationship: parentesco, registry: tiempoRegistro, service: tiempoServicio
       });
@@ -161,6 +167,7 @@ const mapDispatchToProps = dispatch => {
     getEstudios: () => { return getEstudios()(dispatch) },
     getPuestos: () => { return getPuestos()(dispatch) },
     getZonas: () => { return getZonas()(dispatch) },
+    getFolio: () => { return getFolio()(dispatch) },
   }
 }
 export default connect(

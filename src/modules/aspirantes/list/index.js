@@ -56,17 +56,17 @@ class List extends Component {
 
     render() {
         const { aspirantes, loading, removeId, reason } = this.state;
-        //this.props.history.push("/agregar/aspirante")
         return (
             <Fragment>
                 <div className="container-btn-action">
-                    <Button variant="outlined" color="primary" onClick={() => { this.props.download(); }} className="btn-action" >Agregar aspirante      </Button></div>
+                    <Button variant="outlined" color="primary" onClick={() => { this.props.history.push("/agregar/aspirante") }} className="btn-action" >Agregar aspirante      </Button></div>
                 <div className="card card-container">
                     <PaginatedTable
                         title="Aspirantes"
                         onSearch={this.onSearch}
                         data={aspirantes}
-                        columns={[{ id: "id", label: "Folio" }, { id: "fecha", label: "Fecha" }, { id: "nombre", label: "Nombre" }, { id: "rama", label: "Rama" }, { id: "zona", label: "Zona" }, { id: "puesto", label: "Puesto" }, { id: "listado", label: "Listado" }, { id: "editar", label: "", onClick: (e) => { this.props.history.push(`/editar/aspirante/${e.id}`) } }, { id: "eliminar", label: "", onClick: (e) => { this.closeRemove(e) } }]} />
+                        paginated
+                        columns={[{ id: "folio", label: "Folio" }, { id: "fecha", label: "Fecha" }, { id: "nombre", label: "Nombre" }, { id: "rama", label: "Rama" }, { id: "zona", label: "Zona" }, { id: "puesto", label: "Puesto" }, { id: "listado", label: "Listado" }, { id: "editar", label: "", onClick: (e) => { this.props.history.push(`/editar/aspirante/${e.id}`) } }, { id: "eliminar", label: "", onClick: (e) => { this.closeRemove(e) } }]} />
                 </div>
                 {loading && <CircularProgress color="secondary" />}
                 <AlertDialog id="dialog-reason" open={Boolean(removeId)} title="Motivo de baja" noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Dar de baja" btnNoAgree="Cancelar">

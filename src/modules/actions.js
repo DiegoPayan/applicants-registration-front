@@ -55,6 +55,15 @@ export const saveAspirante = (aspirante) => async () => {
   }
   return response.data ? response.data : response.response.data
 }
+export const deregisterAspirante = (aspirante) => async () => {
+  let response;
+  try {
+    response = await axios.post('/api/aspirantes/', { ...aspirante }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+  } catch (error) {
+    response = error
+  }
+  return response.data ? response.data : response.response.data
+}
 
 
 export const getRamas = () => async dispatch => {
@@ -160,6 +169,33 @@ export const updatePuesto = (id, puesto) => async () => {
   return response.data ? response.data : response.response.data
 }
 
+export const getFolio = () => async dispatch => {
+  let response;
+  try {
+    response = await axios.get('/api/aspirantes/nuevo/folio', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+  } catch (error) {
+    response = error
+  }
+  dispatch({
+    type: types.GET_FOLIO,
+    data: response.data
+  });
+  return response.data ? response.data : response.response.data
+}
+
+export const getDisplayDownload = (sc, tl) => async dispatch => {
+  let response;
+  try {
+    response = await axios.get(`/api/aspirantes/lista/ordenada?subcomision=${sc}&tipoLista=${tl}`, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+  } catch (error) {
+    response = error
+  }
+  dispatch({
+    type: types.GET_LISTA_ORDENADA,
+    data: response.data
+  });
+  return response.data ? response.data : response.response.data
+}
 export const getZonas = () => async dispatch => {
   let response;
   try {
@@ -174,10 +210,10 @@ export const getZonas = () => async dispatch => {
   return response.data ? response.data : response.response.data
 }
 
-export const download = () => async dispatch => {
+export const download = (sc, tl) => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/aspirantes/lista/ordenada/descarga?subcomision=HOSPITAL REGIONAL&tipoLista=puntuacion', {
+    response = await axios.get(`/api/aspirantes/lista/ordenada/descarga?subcomision=${sc}L&tipoLista=${tl}`, {
       responseType: 'blob',
       headers: {
         'Authorization': `${localStorage.getItem("token")}`, 'Content-Type': 'application/vnd.openxmlformats',
@@ -193,6 +229,7 @@ export const download = () => async dispatch => {
 
   return response
 }
+
 export const handleSnackbar = (props) => async dispatch => {
   dispatch({
     type: types.HANDLE_SNACKBAR,

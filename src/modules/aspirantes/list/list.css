@@ -32,3 +32,9 @@
   justify-content: space-between;
   align-items: flex-start;
 }
+
+.btn-normal {
+  color: white !important;
+  border: none !important;
+  background: #1d5045 !important;
+}

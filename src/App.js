@@ -24,7 +24,6 @@ function Routes() {
         path={item.path}
         exact
         component={item.component} />)}
-      <Route component={Page404} />
     </Fragment>)
 }
 
@@ -45,6 +44,8 @@ function App(props) {
             path="/login"
             component={Login} />
           <Routes />
+          <Route component={Page404} />
+
         </Switch>
       </BrowserRouter>
       <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleClose}>

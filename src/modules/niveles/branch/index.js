@@ -110,6 +110,7 @@ class BranchesList extends Component {
                         onSearch={this.onSearch}
                         title="Ramas"
                         data={branches}
+                        paginated
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />
                 </div>
                 {loading && <CircularProgress color="secondary" />}

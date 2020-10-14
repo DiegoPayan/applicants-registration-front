@@ -6,3 +6,5 @@ export const GET_RAMAS = 'GET_RAMAS';
 export const GET_ESTUDIOS = 'GET_ESTUDIOS';
 export const GET_PUESTOS = 'GET_PUESTOS';
 export const GET_ZONAS = 'GET_ZONAS';
+export const GET_FOLIO = 'GET_FOLIO';
+export const GET_LISTA_ORDENADA = 'GET_LISTA_ORDENADA';

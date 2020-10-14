@@ -3,6 +3,7 @@ import List from './modules/aspirantes/list';
 import StudiesList from './modules/niveles/studies';
 import BranchesList from './modules/niveles/branch';
 import PositionsList from './modules/niveles/position';
+import Download from './modules/aspirantes/download';
 const routes = [
     {
         name: "Listado de Aspirantes",
@@ -51,6 +52,14 @@ const routes = [
         id: "Puestos",
         path: "/niveles/puestos",
         component: PositionsList,
+        arrow: "/home"
+    }
+    ,
+    {
+        name: "Descargar Listado",
+        id: "Descarga",
+        path: "/descarga/listado",
+        component: Download,
         arrow: "/home"
     }
 ]

@@ -108,6 +108,7 @@ class PositionsList extends Component {
                     <PaginatedTable
                         onSearch={this.onSearch}
                         title="Niveles de estudio"
+                        paginated
                         data={positions}
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />
                 </div>

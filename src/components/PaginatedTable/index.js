@@ -14,10 +14,11 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import './paginatedTable.css';
 
+
 export default function PaginatedTable(props) {
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(props.rowsPerPage);
   const [value, setValue] = React.useState("");
 
   const handleChangePage = (event, newPage) => {
@@ -45,9 +46,9 @@ export default function PaginatedTable(props) {
   let data = props.data || [];
 
   return (
-    <>
+    <div>
       <div className="title-table">{props.title}
-        <div component="form" className="paper-ipt">
+        {props.onSearch && <div component="form" className="paper-ipt">
           <InputBase
             className=""
             placeholder="Buscar"
@@ -62,7 +63,9 @@ export default function PaginatedTable(props) {
             <SearchIcon />
           </IconButton>
 
-        </div></div>
+        </div>}
+      </div>
+      <br />
       <div>
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
@@ -92,7 +95,7 @@ export default function PaginatedTable(props) {
             </TableBody>
           </Table>
         </TableContainer>
-        {data.length > 0 &&
+        {data.length > 0 && props.paginated &&
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
@@ -106,6 +109,9 @@ export default function PaginatedTable(props) {
           />
         }
       </div>
-    </>
+    </div>
   );
+}
+PaginatedTable.defaultProps = {
+  rowsPerPage: 10
 }

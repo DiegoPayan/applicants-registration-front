@@ -8,7 +8,9 @@ const initialState = {
   ramas: undefined,
   estudios: undefined,
   puestos: undefined,
-  zonas: undefined
+  zonas: undefined,
+  aspirantesDescarga: undefined,
+  folio: ""
 };
 
 const usuarios = (state, action) => {
@@ -43,6 +45,14 @@ const usuarios = (state, action) => {
     case types.GET_ZONAS:
       return Object.assign({}, state, {
         zonas: action.data
+      });
+    case types.GET_LISTA_ORDENADA:
+      return Object.assign({}, state, {
+        aspirantesDescarga: action.data
+      });
+    case types.GET_FOLIO:
+      return Object.assign({}, state, {
+        folio: action.data
       });
     case types.HANDLE_SNACKBAR:
       return Object.assign({}, state, {
