@@ -8,7 +8,7 @@ export default function AuthRoute({ component: Component, ...rest }) {
             {...rest}
             render={
                 props =>
-                    localStorage.getItem("token") ? (
+                    sessionStorage.getItem("token") ? (
                         <Container><Component {...props} /></Container>
                     ) : (
                             <Redirect

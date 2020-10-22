@@ -11,7 +11,7 @@ class Login extends Component {
         const login = await this.props.handleAuth(this.state.idUsuario);
         this.props.handleSnackbar({ open: true, message: login.message, type: login.status > 350 ? "error" : "success" })
         if (login.status < 350) {
-            localStorage.setItem("token", login.data);
+            sessionStorage.setItem("token", login.data);
             this.props.history.push("/");
         }
     }
@@ -22,22 +22,24 @@ class Login extends Component {
         return (
             <div className="container-login flex-center">
                 <div className="card card-login">
+                    <span>INICIO DE SESIÓN</span>
                     <div className="logo-login">
-                        <img alt="" src={require("../../../images/logo.jpg")} />
+                        <img alt="" src={require("../../../images/sntissste-logo.png")} />
                     </div>
                     <div className="form-login">
                         <TextField
                             id="idUsuario"
-                            label="Código"
+                            label="Clave de acceso"
                             value={this.state.idUsuario}
                             type="password"
                             onChange={this.handleChange}
                             autoComplete="current-password"
-                            variant="filled"
+                            variant="outlined"
+                            onKeyPress={(e) => e.key == 'Enter' && this.handleAuth()}
                         />
-                        <Button onClick={this.handleAuth} variant="contained" color="primary">
-                            Iniciar sesión
-</Button>
+                        <Button onClick={this.handleAuth} variant="contained">
+                            INGRESAR
+                        </Button>
                     </div>
                 </div>
             </div>

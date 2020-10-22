@@ -20,6 +20,7 @@ function Alert(props) {
 function Routes() {
   return (
     <Fragment>
+      {/**/}
       {routes.map((item, key) => <AuthRoute key={key}
         path={item.path}
         exact

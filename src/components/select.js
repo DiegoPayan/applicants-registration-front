@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
-export const Menu =({label,className,value,onChange,values})=>{
+const Menu =({label,className,value,onChange,values})=>{
     return(
         <TextField
         id="standard-select-currency"
@@ -21,3 +21,5 @@ export const Menu =({label,className,value,onChange,values})=>{
       </TextField>
     )
 }
+
+export default Menu;

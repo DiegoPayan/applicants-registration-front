@@ -20,7 +20,7 @@ export const handleAuth = (clave) => async dispatch => {
 export const getAspirantes = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/aspirantes/', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get('/api/aspirantes/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -35,7 +35,7 @@ export const getAspirantes = () => async dispatch => {
 export const getAspiranteById = (id) => async dispatch => {
   let response;
   try {
-    response = await axios.get(`/api/aspirantes/${id}`, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get(`/api/aspirantes/${id}`, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -49,7 +49,7 @@ export const getAspiranteById = (id) => async dispatch => {
 export const saveAspirante = (aspirante) => async () => {
   let response;
   try {
-    response = await axios.post('/api/aspirantes/', { ...aspirante }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.post('/api/aspirantes/', { ...aspirante }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -58,7 +58,7 @@ export const saveAspirante = (aspirante) => async () => {
 export const deregisterAspirante = (aspirante) => async () => {
   let response;
   try {
-    response = await axios.post('/api/aspirantes/', { ...aspirante }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.post('/api/aspirantes/', { ...aspirante }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -69,7 +69,7 @@ export const deregisterAspirante = (aspirante) => async () => {
 export const getRamas = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/ramas/', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get('/api/ramas/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -83,7 +83,7 @@ export const getRamas = () => async dispatch => {
 export const saveRama = (rama) => async () => {
   let response;
   try {
-    response = await axios.post('/api/ramas/', { ...rama }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.post('/api/ramas/', { ...rama }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -93,7 +93,7 @@ export const saveRama = (rama) => async () => {
 export const updateRama = (id, rama) => async () => {
   let response;
   try {
-    response = await axios.put(`/api/ramas/${id}`, { ...rama }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.put(`/api/ramas/${id}`, { ...rama }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -103,7 +103,7 @@ export const updateRama = (id, rama) => async () => {
 export const getEstudios = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/estudios/', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get('/api/estudios/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -118,7 +118,7 @@ export const getEstudios = () => async dispatch => {
 export const saveEstudio = (estudio) => async () => {
   let response;
   try {
-    response = await axios.post('/api/estudios/', { ...estudio }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.post('/api/estudios/', { ...estudio }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -128,7 +128,7 @@ export const saveEstudio = (estudio) => async () => {
 export const updateEstudio = (id, estudio) => async () => {
   let response;
   try {
-    response = await axios.put(`/api/estudios/${id}`, { ...estudio }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.put(`/api/estudios/${id}`, { ...estudio }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -138,7 +138,7 @@ export const updateEstudio = (id, estudio) => async () => {
 export const getPuestos = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/puestos/', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get('/api/puestos/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -152,7 +152,7 @@ export const getPuestos = () => async dispatch => {
 export const savePuesto = (puesto) => async () => {
   let response;
   try {
-    response = await axios.post('/api/puestos/', { ...puesto }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.post('/api/puestos/', { ...puesto }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -162,7 +162,7 @@ export const savePuesto = (puesto) => async () => {
 export const updatePuesto = (id, puesto) => async () => {
   let response;
   try {
-    response = await axios.put(`/api/puestos/${id}`, { ...puesto }, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.put(`/api/puestos/${id}`, { ...puesto }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -172,7 +172,7 @@ export const updatePuesto = (id, puesto) => async () => {
 export const getFolio = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/aspirantes/nuevo/folio', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get('/api/aspirantes/nuevo/folio', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -186,7 +186,7 @@ export const getFolio = () => async dispatch => {
 export const getDisplayDownload = (sc, tl) => async dispatch => {
   let response;
   try {
-    response = await axios.get(`/api/aspirantes/lista/ordenada?subcomision=${sc}&tipoLista=${tl}`, { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get(`/api/aspirantes/lista/ordenada?subcomision=${sc}&tipoLista=${tl}`, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -199,7 +199,7 @@ export const getDisplayDownload = (sc, tl) => async dispatch => {
 export const getZonas = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/zonas/', { headers: { 'Authorization': `${localStorage.getItem("token")}` } });
+    response = await axios.get('/api/zonas/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -216,7 +216,7 @@ export const download = (sc, tl) => async dispatch => {
     response = await axios.get(`/api/aspirantes/lista/ordenada/descarga?subcomision=${sc}L&tipoLista=${tl}`, {
       responseType: 'blob',
       headers: {
-        'Authorization': `${localStorage.getItem("token")}`, 'Content-Type': 'application/vnd.openxmlformats',
+        'Authorization': `${sessionStorage.getItem("token")}`, 'Content-Type': 'application/vnd.openxmlformats',
         "Content-Disposition": "attachment; filename=" + "Report.xlsx", "responseType": 'blob'
       }
     });
@@ -242,10 +242,10 @@ axios.interceptors.response.use((response) => {
 }, async (error) => {
   let originalRequest = error.config;
   if (error.response.status === 401) {
-    return await axios.post('/api/auth/refresh', { token: localStorage.getItem("token") })
+    return await axios.post('/api/auth/refresh', { token: sessionStorage.getItem("token") })
       .then(async response => {
         if (response.status === 200) {
-          localStorage.setItem('token', response.data.token.data);
+          sessionStorage.setItem('token', response.data.token.data);
           originalRequest.headers.Authorization = response.data.token.data;
 
           return await axios(originalRequest);

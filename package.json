@@ -14,6 +14,7 @@
     "file-saver": "^2.0.2",
     "http-proxy-middleware": "^1.0.0",
     "js-file-download": "^0.4.12",
+    "jwt-decode": "^3.0.0",
     "moment": "^2.27.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

@@ -16,6 +16,7 @@ import Back from '@material-ui/icons/KeyboardBackspace';
 import "./container.css"
 import routes from '../../../routes';
 import { useHistory } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 const Container = (props) => {
   let history = useHistory();
@@ -52,15 +53,14 @@ const Container = (props) => {
       onKeyDown={toggleDrawer()}
     >
       <IconButton onClick={toggleDrawer()} edge="start" className="flex-end-self" color="black" aria-label="menu">
-        <MenuIcon />
+        <MenuIcon fontSize='large' />
       </IconButton>
-      <img className="img-sidebar" src={require("../../../images/logo.jpg")} alt="logo"></img>
+      <img className="img-sidebar" src={require("../../../images/sntissste-logo.png")} alt="logo"></img>
       <div className="listItem listExpanded"  >
         {arrayList.map(item => <IconButton key={item.name} onClick={item.onClick} id={item.name} className={selected === item.name && "selectedBtn"}>{item.img} <span className="span-btn-sb">{item.name}</span></IconButton>
         )}
+        <IconButton className="btn-log-out" onClick={logOut} ><MT /> <span className="span-btn-sb">Cerrar Sesión</span></IconButton>
       </div>
-
-      <IconButton className="btn-log-out" onClick={logOut} ><MT /> <span className="span-btn-sb">Cerrar Sesión</span></IconButton>
     </div>
   );
 
@@ -72,8 +72,17 @@ const Container = (props) => {
     setState(!state);
   };
   const logOut = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     history.push("/login")
+  }
+
+  const userInfo = () => {
+    const token = sessionStorage.getItem('token');
+    const decoded = token && jwt_decode(token).usuario;
+    return decoded && <div variant="h6" className="name-and-rol">
+      {`${decoded.nombre} ${decoded.apellidoPaterno} ${decoded.apellidoMaterno}`}
+      <div className="font-weight-300">{`Permiso: ${decoded.permisos.charAt(0).toUpperCase()}${decoded.permisos.slice(1).toLowerCase()}`}</div>
+    </div>
   }
 
   return (
@@ -86,17 +95,14 @@ const Container = (props) => {
             </IconButton>}
             {title}
           </Typography>
-          <div variant="h6" className="name-and-rol">
-            Adriana Zaragoza Lopez
-            <div className="font-weight-300">Rol</div>
-          </div>
+          {userInfo()}
         </Toolbar>
       </AppBar>
       <AppBar position="static" className={`sidebar- ${state && "boxshadow-none"}`} style={{ boxShadow: state ? "none !important" : "" }}>
         <IconButton onClick={toggleDrawer()} edge="start" className="" color="black" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <img className="img-sidebar" style={{ visibility: "hidden" }} src={require("../../../images/logo.jpg")} alt="logo"></img>
+        <img className="img-sidebar-collapsed" src={require("../../../images/sntissste-logo.png")} alt="logo"></img>
 
         <div className="listItem" >
           {arrayList.map(item => <IconButton id={item.name} key={item.name} onClick={item.onClick} className={selected === item.name && "selectedBtn"}>{item.img} </IconButton>

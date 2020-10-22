@@ -103,11 +103,11 @@ class PositionsList extends Component {
         return (
             <Fragment>
                 <div className="container-btn-action">
-                    <Button variant="outlined" color="primary" className="btn-action" onClick={() => this.closeRemove({ id: "x" })} >Nuevo      </Button></div>
+                    <Button variant="outlined" color="primary" className="btn-action" onClick={() => this.closeRemove({ id: "x" })} >Nuevo Puesto     </Button></div>
                 <div className="card card-container">
                     <PaginatedTable
                         onSearch={this.onSearch}
-                        title="Niveles de estudio"
+                        title="Puestos"
                         paginated
                         data={positions}
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />

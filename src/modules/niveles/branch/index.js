@@ -104,7 +104,7 @@ class BranchesList extends Component {
         return (
             <Fragment>
                 <div className="container-btn-action">
-                    <Button variant="outlined" color="primary" className="btn-action" onClick={() => this.closeRemove({ id: "x" })} >Nuevo      </Button></div>
+                    <Button variant="outlined" color="primary" className="btn-action" onClick={() => this.closeRemove({ id: "x" })} >Nueva Rama     </Button></div>
                 <div className="card card-container">
                     <PaginatedTable
                         onSearch={this.onSearch}
