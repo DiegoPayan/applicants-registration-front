@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import SelectMenu from '../../../components/Select';
-import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas, getFolio } from "../../actions";
+import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas, getFolio, editAspirante } from "../../actions";
 import { connect } from 'react-redux';
 import { numericCharacters, camelizeString } from "../../../utils"
 import moment from 'moment';
@@ -78,7 +78,14 @@ class Edit extends Component {
         total: parseInt(scholarship) + parseInt(registry) + parseInt(service) + parseInt(relationship)
       }
     }
-    const save = await this.props.saveAspirante(data)
+    let save = {}
+    const { match } = this.props;
+
+    if (match.params && match.params.id) {
+      save = await this.props.editAspirante(data.aspirante);
+    } else {
+      save = await this.props.saveAspirante(data)
+    }
     if (save && save.status === 200) {
       this.setState({ isSave: { failed: false, message: !id ? GUARDAR_OTRO_A : EDITAR_AGAIN_A, title: "Se guardo con exito el aspirante" } })
       return
@@ -161,6 +168,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getAspiranteById: (props) => { return getAspiranteById(props)(dispatch) },
     saveAspirante: (data) => { return saveAspirante(data)(dispatch) },
+    editAspirante: (data) => { return editAspirante(data)(dispatch) },
     getRamas: () => { return getRamas()(dispatch) },
     getEstudios: () => { return getEstudios()(dispatch) },
     getPuestos: () => { return getPuestos()(dispatch) },

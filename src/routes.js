@@ -4,6 +4,7 @@ import StudiesList from './modules/niveles/studies';
 import BranchesList from './modules/niveles/branch';
 import PositionsList from './modules/niveles/position';
 import Download from './modules/aspirantes/download';
+import Historial from './modules/usuarios/history';
 const routes = [
     {
         name: "Listado de Aspirantes",
@@ -60,6 +61,12 @@ const routes = [
         id: "Descarga",
         path: "/descarga/listado",
         component: Download,
+        arrow: "/home"
+    }, {
+        name: "Historial",
+        id: "Historial",
+        path: "/historial",
+        component: Historial,
         arrow: "/home"
     }
 ]
