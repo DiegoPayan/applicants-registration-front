@@ -4,6 +4,7 @@ import StudiesList from './modules/niveles/studies';
 import BranchesList from './modules/niveles/branch';
 import PositionsList from './modules/niveles/position';
 import Download from './modules/aspirantes/download';
+import Configuracion from './modules/configuracion';
 const routes = [
     {
         name: "Listado de Aspirantes",
@@ -36,25 +37,31 @@ const routes = [
     {
         name: "Listado de Niveles de estudio",
         id: "Nivel de estudios",
-        path: "/niveles/estudio",
+        path: "/niveles-estudio",
         component: StudiesList,
         arrow: "/home"
     },
     {
         name: "Listado de Ramas",
         id: "Ramas",
-        path: "/niveles/ramas",
+        path: "/ramas",
         component: BranchesList,
         arrow: "/home"
     },
     {
         name: "Listado de Puestos",
         id: "Puestos",
-        path: "/niveles/puestos",
+        path: "/puestos",
         component: PositionsList,
         arrow: "/home"
-    }
-    ,
+    },
+    {
+        name: "Configuración de Firmas",
+        id: "Configuración",
+        path: "/configuracion",
+        component: Configuracion,
+        arrow: "/home"
+    },
     {
         name: "Descargar Listado",
         id: "Descarga",

@@ -212,6 +212,20 @@ export const getZonas = () => async dispatch => {
   return response.data ? response.data : response.response.data
 }
 
+export const getConfiguracion = () => async dispatch => {
+  let response;
+  try {
+    response = await axios.get('/api/configuracion', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` }});
+  } catch (error) {
+    response = error;
+  }
+  dispatch({
+    type: types.GET_CONFIGURACION,
+    data: response.data
+  });
+  return response.data ? response.data : response.response.data
+}
+
 export const download = (sc, tl) => async dispatch => {
   let response;
   try {

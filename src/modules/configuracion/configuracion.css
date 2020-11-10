@@ -1,0 +1,33 @@
+
+.config_title {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.config_title_span {
+  font-size: 18px;
+}
+
+.config_body {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.config_body_part {
+  width: 33%;
+}
+
+.config_body_part_input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.config_input {
+  width: 70%;
+}
+
+.margin-top {
+  margin-top: 3rem;
+}

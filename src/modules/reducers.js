@@ -11,7 +11,8 @@ const initialState = {
   puestos: undefined,
   zonas: undefined,
   aspirantesDescarga: undefined,
-  folio: ""
+  folio: "",
+  configuracion: undefined
 };
 
 const usuarios = (state, action) => {
@@ -54,6 +55,10 @@ const usuarios = (state, action) => {
     case types.GET_FOLIO:
       return Object.assign({}, state, {
         folio: action.data
+      });
+    case types.GET_CONFIGURACION:
+      return Object.assign({}, state, {
+        configuracion: action.data
       });
     case types.HANDLE_SNACKBAR:
       return Object.assign({}, state, {
