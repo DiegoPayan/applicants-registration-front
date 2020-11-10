@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { Button, TextField } from '@material-ui/core';
-import SelectMenu from '../../../components/select';
+import SelectMenu from '../../../components/Select';
 import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas, getFolio } from "../../actions";
 import { connect } from 'react-redux';
 import { numericCharacters, camelizeString } from "../../../utils"
 import moment from 'moment';
 import AlertDialog from '../../../components/DialogConfirm';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { GUARDAR_OTRO_A, EDITAR_AGAIN_A } from '../../../constants';
 
 import "./edit.css"
@@ -143,7 +142,6 @@ class Edit extends Component {
             <div className="total-points txt-color-gray" >Total:<span>{total}</span></div>
           </div>
         </div>
-        {loading && <CircularProgress color="secondary" />}
         <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.closeSave} agreeClick={this.goToHome} btnAgree="Ir a listado" btnNoAgree="Permanecer en la pantalla">
           {isSave.message}
         </AlertDialog>

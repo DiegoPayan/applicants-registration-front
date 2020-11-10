@@ -1,8 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Button, TextField, Tooltip } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getRamas, updateRama, saveRama } from "../../actions";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { getRamas, updateRama, saveRama, handleSnackbar } from "../../actions";
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/DeleteForever';
 import Replay from '@material-ui/icons/Replay';
@@ -12,9 +11,9 @@ import {
     OK_EDIT_SAVE_BRANCH,
     OK_EDIT_SAVE_BRANCH_TITLE,
     ERR_EDIT_SAVE_BRANCH,
+    OK_STATUS_BRANCH_TITLE,
     ERR_EDIT_SAVE_BRANCH_TITLE,
-    ERR_STATUS_BRANCH_TITLE,
-    OK_STATUS_BRANCH_TITLE
+    DELETE_LEVEL
 } from '../../../constants';
 
 class BranchesList extends Component {
@@ -73,26 +72,24 @@ class BranchesList extends Component {
 
     getNameById = (id) => this.state.branches.filter(item => item.id === id)
 
-    goToHome = () => {
-        this.props.history.push("/home");
-    }
-
     keepInList = () => {
-        this.setState({ isSave: false, loading: true })
+        this.setState({ isSave: false })
         this.props.getRamas();
     }
     disableLevel = async (e) => {
-        console.log(e);
-
-        this.closeRemove()
+        this.setState({ isSave: { title: DELETE_LEVEL(e.nombre) }, delete: e })
+    }
+    remove = async () => {
+        const e = this.state.delete;
         let branchSave = await this.props.updateRama(e.id, { estatus: e.estatus === "INACTIVO" ? "ACTIVO" : "INACTIVO" })
-
+        this.keepInList()
         if (branchSave.status === 200) {
-            this.setState({ isSave: { message: OK_EDIT_SAVE_BRANCH, title: OK_STATUS_BRANCH_TITLE } })
+            this.props.handleSnackbar({ message: OK_STATUS_BRANCH_TITLE, type: "success", open: true })
             return
         }
-        this.setState({ isSave: { message: ERR_EDIT_SAVE_BRANCH, title: ERR_STATUS_BRANCH_TITLE } })
+        this.props.handleSnackbar({ message: branchSave.message, type: "error", open: true })
     }
+
     onSearch = (value) => {
         const branches = this.props.ramas.data.filter(branch => {
             return branch.nombre.toUpperCase().includes(value.toUpperCase());
@@ -100,7 +97,7 @@ class BranchesList extends Component {
         this.setState({ branches });
     }
     render() {
-        const { branches, loading, branchId, branch, isSave } = this.state;
+        const { branches, branchId, branch, isSave } = this.state;
         return (
             <Fragment>
                 <div className="container-btn-action">
@@ -113,12 +110,10 @@ class BranchesList extends Component {
                         paginated
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />
                 </div>
-                {loading && <CircularProgress color="secondary" />}
                 <AlertDialog id="dialog-reason" open={Boolean(branchId)} title={`${!isNaN(branchId) ? "Editar" : "Agregar"} Ramas`} noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Guardar" btnNoAgree="Cancelar">
                     <TextField variant="filled" className="txt-reason" id="branch" label="Nivel de estudio" value={branch} onChange={(e) => this.setState({ branch: e.target.value })} />
                 </AlertDialog>
-                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.keepInList} agreeClick={this.goToHome} btnAgree="Ir a listado" btnNoAgree="Permanecer en la pantalla">
-                    {isSave.message}
+                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.keepInList} agreeClick={this.remove} btnAgree="Aceptar" btnNoAgree="Cancelar">
                 </AlertDialog>
             </Fragment >
         );
@@ -132,6 +127,7 @@ const mapDispatchToProps = dispatch => {
         getRamas: () => { return getRamas()(dispatch) },
         updateRama: (id, Rama) => { return updateRama(id, Rama)(dispatch) },
         saveRama: (Rama) => { return saveRama(Rama)(dispatch) },
+        handleSnackbar: (props) => { handleSnackbar(props)(dispatch) },
     }
 }
 export default connect(

@@ -1,8 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Button, TextField, Tooltip } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getEstudios, updateEstudio, saveEstudio } from "../../actions";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { getEstudios, updateEstudio, saveEstudio, handleSnackbar } from "../../actions";
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/DeleteForever';
 import Replay from '@material-ui/icons/Replay';
@@ -13,8 +12,8 @@ import {
     OK_EDIT_SAVE_STUDIES_TITLE,
     ERR_EDIT_SAVE_BRANCH,
     ERR_EDIT_SAVE_STUDIES_TITLE,
-    ERR_STATUS_STUDIES_TITLE,
-    OK_STATUS_STUDIES_TITLE
+    OK_STATUS_STUDIES_TITLE,
+    DELETE_LEVEL
 } from '../../../constants';
 
 class StudiesList extends Component {
@@ -78,20 +77,21 @@ class StudiesList extends Component {
     }
 
     keepInList = () => {
-        this.setState({ isSave: false, loading: true })
+        this.setState({ isSave: false })
         this.props.getEstudios();
     }
     disableLevel = async (e) => {
-        this.closeRemove()
-        console.log(e);
-
+        this.setState({ isSave: { title: DELETE_LEVEL(e.nombre) }, delete: e })
+    }
+    remove = async () => {
+        const e = this.state.delete;
         let studySave = await this.props.updateEstudio(e.id, { estatus: e.estatus === "INACTIVO" ? "ACTIVO" : "INACTIVO" })
-
+        this.keepInList()
         if (studySave.status === 200) {
-            this.setState({ isSave: { message: OK_EDIT_SAVE_STUDIES, title: OK_STATUS_STUDIES_TITLE } })
+            this.props.handleSnackbar({ message: OK_STATUS_STUDIES_TITLE, type: "success", open: true })
             return
         }
-        this.setState({ isSave: { message: ERR_EDIT_SAVE_BRANCH, title: ERR_STATUS_STUDIES_TITLE } })
+        this.props.handleSnackbar({ message: studySave.message, type: "error", open: true })
     }
     onSearch = (value) => {
         const studies = this.props.estudios.data.filter(study => {
@@ -100,7 +100,7 @@ class StudiesList extends Component {
         this.setState({ studies });
     }
     render() {
-        const { studies, loading, studyId, study, isSave } = this.state;
+        const { studies, studyId, study, isSave } = this.state;
         return (
             <Fragment>
                 <div className="container-btn-action">
@@ -113,12 +113,10 @@ class StudiesList extends Component {
                         paginated
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />
                 </div>
-                {loading && <CircularProgress color="secondary" />}
                 <AlertDialog id="dialog-reason" open={Boolean(studyId)} title={`${!isNaN(studyId) ? "Editar" : "Agregar"} Nivel de estudio`} noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Guardar" btnNoAgree="Cancelar">
                     <TextField variant="filled" className="txt-reason" id="study" label="Nivel de estudio" value={study} onChange={(e) => this.setState({ study: e.target.value })} />
                 </AlertDialog>
-                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.keepInList} agreeClick={this.goToHome} btnAgree="Ir a listado" btnNoAgree="Permanecer en la pantalla">
-                    {isSave.message}
+                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.keepInList} agreeClick={this.remove} btnAgree="Aceptar" btnNoAgree="Cancelar">
                 </AlertDialog>
             </Fragment >
         );
@@ -132,6 +130,7 @@ const mapDispatchToProps = dispatch => {
         getEstudios: () => { return getEstudios()(dispatch) },
         updateEstudio: (id, estudio) => { return updateEstudio(id, estudio)(dispatch) },
         saveEstudio: (estudio) => { return saveEstudio(estudio)(dispatch) },
+        handleSnackbar: (props) => { handleSnackbar(props)(dispatch) },
     }
 }
 export default connect(

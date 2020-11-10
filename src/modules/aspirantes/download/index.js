@@ -2,7 +2,6 @@ import React, { Fragment, Component } from 'react';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { download, getDisplayDownload } from "../../actions";
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -65,7 +64,6 @@ class Download extends Component {
                     <Button variant="outlined" color="primary" disabled={tl === "" && sc === "" && !aspirantes} onClick={this.handlePreview} className="btn-normal"  >Vista previa      </Button>
 
                 </div>
-                {/* {loading && <CircularProgress color="secondary" />} */}
                 <Unregister
                     aspirante={"id"}
                     open={openUn}

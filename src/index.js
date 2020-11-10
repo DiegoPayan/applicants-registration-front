@@ -8,7 +8,7 @@ import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <Provider store={configureStore()}>
+  <Provider store={configureStore}>
     <App />
   </Provider>,
   document.getElementById('root')

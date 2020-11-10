@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as types from './actionTypes.js';
 import { saveAs } from 'file-saver';
+import configureStore from './../redux/store';
+
 
 
 export const handleAuth = (clave) => async dispatch => {
@@ -237,9 +239,27 @@ export const handleSnackbar = (props) => async dispatch => {
   });
 }
 
+const dispatcher = configureStore.dispatch;
+axios.interceptors.request.use(function (config) {
+  dispatcher({
+    type: types.HANDLE_LOADING,
+    data: true
+  }); return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+
 axios.interceptors.response.use((response) => {
+  dispatcher({
+    type: types.HANDLE_LOADING,
+    data: false
+  });
   return response;
 }, async (error) => {
+  dispatcher({
+    type: types.HANDLE_LOADING,
+    data: false
+  });
   let originalRequest = error.config;
   if (error.response.status === 401) {
     return await axios.post('/api/auth/refresh', { token: sessionStorage.getItem("token") })
@@ -257,6 +277,9 @@ axios.interceptors.response.use((response) => {
         return axios(originalRequest);
       });
   }
+  dispatcher({
+    type: types.HANDLE_LOADING,
+    data: false
+  });
   return Promise.reject(error);
-
 });

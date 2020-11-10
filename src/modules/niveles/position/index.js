@@ -1,8 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Button, TextField, Tooltip } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getPuestos, updatePuesto, savePuesto } from "../../actions";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { getPuestos, updatePuesto, savePuesto, handleSnackbar } from "../../actions";
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/DeleteForever';
 import Replay from '@material-ui/icons/Replay';
@@ -12,10 +11,11 @@ import {
     OK_EDIT_SAVE_POSITION,
     OK_EDIT_SAVE_POSITION_TITLE,
     ERR_EDIT_SAVE_POSITION_TITLE,
-    ERR_STATUS_POSITION_TITLE,
     OK_STATUS_POSITION_TITLE,
-    ERR_EDIT_SAVE_BRANCH
+    ERR_EDIT_SAVE_BRANCH,
+    DELETE_LEVEL
 } from '../../../constants';
+
 class PositionsList extends Component {
     state = {
         loading: true,
@@ -72,25 +72,23 @@ class PositionsList extends Component {
 
     getNameById = (id) => this.state.positions.filter(item => item.id === id)
 
-    goToHome = () => {
-        this.props.history.push("/home");
-    }
-
     keepInList = () => {
-        this.setState({ isSave: false, loading: true })
+        this.setState({ isSave: false })
         this.props.getPuestos();
     }
     disableLevel = async (e) => {
-        this.closeRemove()
-        console.log(e);
-
+        this.setState({ isSave: { title: DELETE_LEVEL(e.nombre) }, delete: e })
+    }
+    remove = async () => {
+        const e = this.state.delete;
         let positionSave = await this.props.updatePuesto(e.id, { estatus: e.estatus === "INACTIVO" ? "ACTIVO" : "INACTIVO" })
+        this.keepInList()
 
         if (positionSave.status === 200) {
-            this.setState({ isSave: { message: OK_EDIT_SAVE_POSITION, title: OK_STATUS_POSITION_TITLE } })
+            this.props.handleSnackbar({ message: OK_STATUS_POSITION_TITLE, type: "success", open: true })
             return
         }
-        this.setState({ isSave: { message: ERR_EDIT_SAVE_BRANCH, title: ERR_STATUS_POSITION_TITLE } })
+        this.props.handleSnackbar({ message: positionSave.message, type: "error", open: true })
     }
     onSearch = (value) => {
         const positions = this.props.puestos.data.filter(position => {
@@ -99,7 +97,7 @@ class PositionsList extends Component {
         this.setState({ positions });
     }
     render() {
-        const { positions, loading, positionId, position, isSave } = this.state;
+        const { positions, positionId, position, isSave } = this.state;
         return (
             <Fragment>
                 <div className="container-btn-action">
@@ -112,12 +110,10 @@ class PositionsList extends Component {
                         data={positions}
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />
                 </div>
-                {loading && <CircularProgress color="secondary" />}
                 <AlertDialog id="dialog-reason" open={Boolean(positionId)} title={`${!isNaN(positionId) ? "Editar" : "Agregar"} Nivel de estudio`} noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Guardar" btnNoAgree="Cancelar">
                     <TextField variant="filled" className="txt-reason" id="position" label="Nivel de estudio" value={position} onChange={(e) => this.setState({ position: e.target.value })} />
                 </AlertDialog>
-                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.keepInList} agreeClick={this.goToHome} btnAgree="Ir a listado" btnNoAgree="Permanecer en la pantalla">
-                    {isSave.message}
+                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.keepInList} agreeClick={this.remove} btnAgree="Aceptar" btnNoAgree="Cancelar">
                 </AlertDialog>
             </Fragment >
         );
@@ -131,6 +127,8 @@ const mapDispatchToProps = dispatch => {
         getPuestos: () => { return getPuestos()(dispatch) },
         updatePuesto: (id, estudio) => { return updatePuesto(id, estudio)(dispatch) },
         savePuesto: (estudio) => { return savePuesto(estudio)(dispatch) },
+        handleSnackbar: (props) => { handleSnackbar(props)(dispatch) },
+
     }
 }
 export default connect(

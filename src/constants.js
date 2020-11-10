@@ -19,3 +19,5 @@ export const OK_EDIT_SAVE_STUDIES_TITLE = "Se ha guardado con exito el nivel de 
 export const ERR_EDIT_SAVE_STUDIES_TITLE = "No se ha guardado con exito el nivel de estudio"
 export const ERR_STATUS_STUDIES_TITLE = "No se ha guardado con exito el estatus del nivel de estudio"
 export const OK_STATUS_STUDIES_TITLE = "Se ha guardado con exito el estatus del nivel de estudio"
+
+export const DELETE_LEVEL = (name) => `¿Está seguro que desea eliminar ${name} de la lista?`

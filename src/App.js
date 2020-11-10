@@ -11,6 +11,7 @@ import moment from 'moment';
 import 'moment/locale/es';
 import Page404 from './components/Page404';
 import AuthRoute from './components/AuthRoute';
+import Loading from './components/Loading/loading';
 moment.locale('es');
 
 function Alert(props) {
@@ -29,7 +30,7 @@ function Routes() {
 }
 
 function App(props) {
-  const { snackbar, handleSnackbar } = props;
+  const { snackbar, handleSnackbar, loading } = props;
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -54,13 +55,19 @@ function App(props) {
           {snackbar.message}
         </Alert>
       </Snackbar>
+      {loading && <Loading />}
     </div>
   );
 }
 
-const mapStateToProps = (state) => ({
-  snackbar: state.usuarios.snackbar
-})
+const mapStateToProps = (state) => {
+  console.log(state.usuarios);
+
+  return ({
+    snackbar: state.usuarios.snackbar,
+    loading: state.usuarios.loading
+  })
+}
 const mapDispatchToProps = dispatch => {
   return {
     handleSnackbar: (props) => { handleSnackbar(props)(dispatch) },

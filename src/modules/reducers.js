@@ -5,6 +5,7 @@ const initialState = {
   aspiranteById: undefined,
   auth: undefined,
   snackbar: {},
+  loading: false,
   ramas: undefined,
   estudios: undefined,
   puestos: undefined,
@@ -57,6 +58,12 @@ const usuarios = (state, action) => {
     case types.HANDLE_SNACKBAR:
       return Object.assign({}, state, {
         snackbar: action.data
+      });
+    case types.HANDLE_LOADING:
+      console.log(action);
+
+      return Object.assign({}, state, {
+        loading: action.data
       });
     default:
       return state;
