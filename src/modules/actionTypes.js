@@ -10,3 +10,4 @@ export const GET_ZONAS = 'GET_ZONAS';
 export const GET_FOLIO = 'GET_FOLIO';
 export const GET_LISTA_ORDENADA = 'GET_LISTA_ORDENADA';
 export const GET_CONFIGURACION = 'GET_CONFIGURACION'
+export const GET_HISTORIAL = 'GET_HISTORIAL';

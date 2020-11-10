@@ -91,14 +91,14 @@ class List extends Component {
                             <div className="container-forms">
                                 <FormControl component="fieldset" className="form-download">
                                     <FormLabel component="legend">Subcomisión</FormLabel>
-                                    <RadioGroup aria-label="sc" name="sc" value={value} onChange={this.handleChange} className="flex-center">
+                                    <RadioGroup aria-label="sc" name="sc" value={sc} onChange={this.handleChange} className="flex-center">
                                         <FormControlLabel value="DELEGACION" control={<Radio />} label="DELEGACIÓN" />
                                         <FormControlLabel value="HOSPITAL REGIONAL" control={<Radio />} label="HOSPITAL REGIONAL" />
                                     </RadioGroup>
                                 </FormControl>
                                 <FormControl component="fieldset" className="form-download">
                                     <FormLabel component="legend">Tipo de Lista</FormLabel>
-                                    <RadioGroup aria-label="tl" name="tl" value={value} onChange={this.handleChange} className="flex-center">
+                                    <RadioGroup aria-label="tl" name="tl" value={tl} onChange={this.handleChange} className="flex-center">
                                         <FormControlLabel value="puntuacion" control={<Radio />} label="Puntuación" />
                                         <FormControlLabel value="cronologico" control={<Radio />} label="Cronologico" />
                                     </RadioGroup>
@@ -106,6 +106,7 @@ class List extends Component {
                                 <div className="container-buttons-download">
                                     <Button variant="outlined" disabled={tl === "" && sc === ""} color="primary" onClick={this.getList} className="btn-normal"  >Generar lista      </Button>
                                     <Button variant="outlined" color="primary" disabled={tl === "" && sc === "" && !aspirantes} onClick={this.handlePreview} className="btn-normal"  >Vista previa      </Button>
+                                    <Button variant="outlined" color="primary" disabled={tl === "" && sc === "" && !aspirantes} onClick={() => { this.props.download(sc, tl); }} className="btn-normal"  >Descargar      </Button>
                                 </div>
                             </div>
                         </AccordionDetails>

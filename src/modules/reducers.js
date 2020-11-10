@@ -12,7 +12,8 @@ const initialState = {
   zonas: undefined,
   aspirantesDescarga: undefined,
   folio: "",
-  configuracion: undefined
+  configuracion: undefined,
+  historial: []
 };
 
 const usuarios = (state, action) => {
@@ -59,6 +60,10 @@ const usuarios = (state, action) => {
     case types.GET_CONFIGURACION:
       return Object.assign({}, state, {
         configuracion: action.data
+      });
+    case types.GET_HISTORIAL:
+      return Object.assign({}, state, {
+        historial: action.data
       });
     case types.HANDLE_SNACKBAR:
       return Object.assign({}, state, {

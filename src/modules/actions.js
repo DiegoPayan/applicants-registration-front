@@ -57,6 +57,17 @@ export const saveAspirante = (aspirante) => async () => {
   }
   return response.data ? response.data : response.response.data
 }
+export const editAspirante = (aspirante) => async () => {
+  let response;
+  try {
+    response = await axios.put(`/api/aspirantes/${aspirante.id}`, { ...aspirante }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
+  } catch (error) {
+    response = error
+  }
+  console.log(response);
+
+  return response.data ? response.data : response.response.data
+}
 export const deregisterAspirante = (aspirante) => async () => {
   let response;
   try {
@@ -198,6 +209,21 @@ export const getDisplayDownload = (sc, tl) => async dispatch => {
   });
   return response.data ? response.data : response.response.data
 }
+
+export const getHistorial = () => async dispatch => {
+  let response;
+  try {
+    response = await axios.get(`/api/historial`, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
+  } catch (error) {
+    response = error
+  }
+  dispatch({
+    type: types.GET_HISTORIAL,
+    data: response.data
+  });
+  return response.data ? response.data : response.response.data
+}
+
 export const getZonas = () => async dispatch => {
   let response;
   try {
