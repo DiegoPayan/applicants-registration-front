@@ -16,7 +16,8 @@ class Edit extends Component {
   state = {
     ...initialState,
     loading: true,
-    isSave: false
+    isSave: false,
+    estatus: "ACTIVO"
   }
   async componentDidMount() {
     const { match, getAspiranteById } = this.props;
@@ -43,9 +44,9 @@ class Edit extends Component {
 
     const { aspirante } = nextProps
     if (this.props.aspirante !== aspirante && aspirante && aspirante.data && aspirante.status === 200) {
-      const { puntaje: { escolaridad, tiempoServicio, tiempoRegistro, parentesco }, id, folio, fecha, apellidoPaterno, nombre, apellidoMaterno, idEstudios, idRama, idPuesto, idZona, listado } = aspirante.data;
+      const { puntaje: { escolaridad, tiempoServicio, tiempoRegistro, parentesco }, id, estatus, folio, fecha, apellidoPaterno, nombre, apellidoMaterno, idEstudios, idRama, idPuesto, idZona, listado } = aspirante.data;
       this.setState({
-        folio: folio, id: parseInt(id), birthday: moment(fecha).format("YYYY-MM-DD"), name: nombre, maternal: apellidoMaterno, paternal: apellidoPaterno, studies: idEstudios, branch: idRama, position: idPuesto, zone: idZona, list: listado, scholarship: escolaridad, relationship: parentesco, registry: tiempoRegistro, service: tiempoServicio
+        folio: folio, estatus, id: parseInt(id), birthday: moment(fecha).format("YYYY-MM-DD"), name: nombre, maternal: apellidoMaterno, paternal: apellidoPaterno, studies: idEstudios, branch: idRama, position: idPuesto, zone: idZona, list: listado, scholarship: escolaridad, relationship: parentesco, registry: tiempoRegistro, service: tiempoServicio
       });
     }
 
@@ -55,7 +56,7 @@ class Edit extends Component {
   }
 
   saveAspirante = async () => {
-    const { folio, birthday, name, maternal, id, paternal, studies, branch, position, zone, list, scholarship, relationship, registry, service } = this.state;
+    const { folio, birthday, estatus, name, maternal, id, paternal, studies, branch, position, zone, list, scholarship, relationship, registry, service } = this.state;
     const data = {
       aspirante: {
         id: id || null,
@@ -68,7 +69,8 @@ class Edit extends Component {
         apellidoPaterno: camelizeString(paternal),
         apellidoMaterno: camelizeString(maternal),
         listado: list,
-        fecha: birthday
+        fecha: birthday,
+        estatus
       },
       puntaje: {
         escolaridad: scholarship,

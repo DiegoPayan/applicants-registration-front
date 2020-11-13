@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getAspirantes, download, getDisplayDownload } from "../../actions";
+import { getAspirantes, download, getDisplayDownload, editAspirante, handleSnackbar } from "../../actions";
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/DeleteForever';
 import moment from 'moment';
@@ -28,7 +28,9 @@ class List extends Component {
         value: ""
     }
     async componentDidMount() {
-
+        this.reloadList()
+    }
+    reloadList = async () => {
         let aspirantesData = await this.props.getAspirantes();
         if (aspirantesData.status !== 200) {
             this.setState({ loading: false });
@@ -48,7 +50,7 @@ class List extends Component {
     }
 
     closeRemove = (e) => {
-        this.setState({ removeId: e ? e.id : false })
+        this.setState({ removeId: e ? e.id : false, reason: "" })
     }
     getList = () => {
         const { sc, tl } = this.state;
@@ -60,8 +62,16 @@ class List extends Component {
     }
 
     removeAspirant = async () => {
-
+        const data = {
+            aspirante: {
+                id: this.state.removeId, motivo_baja: this.state.reason, estatus: "INACTIVO"
+            }
+        }
+        const response = await this.props.editAspirante(data.aspirante)
+        this.props.handleSnackbar({ message: response.message, type: response.status === 200 ? "success" : "error", open: true })
         this.closeRemove()
+        this.reloadList()
+
     }
 
     onSearch = (value) => {
@@ -133,6 +143,8 @@ const mapDispatchToProps = dispatch => {
         getAspirantes: () => { return getAspirantes()(dispatch) },
         download: (sc, tl) => { return download(sc, tl)(dispatch) },
         display: (sc, tl) => { return getDisplayDownload(sc, tl)(dispatch) },
+        editAspirante: (data) => { return editAspirante(data)(dispatch) },
+        handleSnackbar: (props) => { handleSnackbar(props)(dispatch) },
     }
 }
 export default connect(

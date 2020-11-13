@@ -42,8 +42,6 @@ class Historial extends Component {
     }
     render() {
         const { positions } = this.state;
-        console.log(positions);
-
         return (
             <div className="container-btn-action h100">
                 <div className="card card-container">

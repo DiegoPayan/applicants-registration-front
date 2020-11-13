@@ -60,7 +60,7 @@ export const saveAspirante = (aspirante) => async () => {
 export const editAspirante = (aspirante) => async () => {
   let response;
   try {
-    response = await axios.put(`/api/aspirantes/${aspirante.id}`, { ...aspirante }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
+    response = await axios.put(`/api/aspirantes/${aspirante.id}`, { aspirante }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -239,7 +239,7 @@ export const getZonas = () => async dispatch => {
 export const getConfiguracion = () => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/configuracion', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` }});
+    response = await axios.get('/api/configuracion', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error;
   }
@@ -253,7 +253,7 @@ export const getConfiguracion = () => async dispatch => {
 export const saveConfiguracion = (data) => async dispatch => {
   let response;
   try {
-    response = await axios.post('/api/configuracion', [...data] ,{ headers: { 'Authorization': `${sessionStorage.getItem("token")}` }});
+    response = await axios.post('/api/configuracion', [...data], { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error;
   }

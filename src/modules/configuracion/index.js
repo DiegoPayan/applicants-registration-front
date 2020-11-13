@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import { getConfiguracion, saveConfiguracion } from '../actions';
+import { getConfiguracion, saveConfiguracion, handleSnackbar } from '../actions';
 
 import './configuracion.css';
 
@@ -36,38 +36,41 @@ class Configuration extends Component {
     })
   }
 
-  saveConfiguration = () => {
+  saveConfiguration = async () => {
     let {
       nombre1, nombre2, nombre3, nombre4, nombre5,
       puesto1, puesto2, puesto3, puesto4, puesto5,
     } = this.state;
 
-    this.props.saveConfiguracion([{
-        "nombre": nombre1,
-        "puesto": puesto1,
-        "orden": 1
-      },
-      {
-        "nombre": nombre2,
-        "puesto": puesto2,
-        "orden": 2
-      },
-      {
-        "nombre": nombre3,
-        "puesto": puesto3,
-        "orden": 3
-      },
-      {
-        "nombre": nombre4,
-        "puesto": puesto4,
-        "orden": 4
-      },
-      {
-        "nombre": nombre5,
-        "puesto": puesto5,
-        "orden": 5
-      }
+    const response = await this.props.saveConfiguracion([{
+      "nombre": nombre1,
+      "puesto": puesto1,
+      "orden": 1
+    },
+    {
+      "nombre": nombre2,
+      "puesto": puesto2,
+      "orden": 2
+    },
+    {
+      "nombre": nombre3,
+      "puesto": puesto3,
+      "orden": 3
+    },
+    {
+      "nombre": nombre4,
+      "puesto": puesto4,
+      "orden": 4
+    },
+    {
+      "nombre": nombre5,
+      "puesto": puesto5,
+      "orden": 5
+    }
     ]);
+
+    this.props.handleSnackbar({ message: response.message, type: response.status === 200 ? "success" : "error", open: true })
+    return
   }
 
   render() {
@@ -212,7 +215,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getConfiguration: () => { return getConfiguracion()(dispatch) },
-    saveConfiguracion: (data) => { return saveConfiguracion(data)(dispatch) }
+    saveConfiguracion: (data) => { return saveConfiguracion(data)(dispatch) },
+    handleSnackbar: (props) => { handleSnackbar(props)(dispatch) },
   };
 }
 
