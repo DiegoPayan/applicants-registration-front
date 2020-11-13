@@ -64,8 +64,6 @@ export const editAspirante = (aspirante) => async () => {
   } catch (error) {
     response = error
   }
-  console.log(response);
-
   return response.data ? response.data : response.response.data
 }
 export const deregisterAspirante = (aspirante) => async () => {
@@ -249,6 +247,16 @@ export const getConfiguracion = () => async dispatch => {
     type: types.GET_CONFIGURACION,
     data: response.data
   });
+  return response.data ? response.data : response.response.data
+}
+
+export const saveConfiguracion = (data) => async dispatch => {
+  let response;
+  try {
+    response = await axios.post('/api/configuracion', [...data] ,{ headers: { 'Authorization': `${sessionStorage.getItem("token")}` }});
+  } catch (error) {
+    response = error;
+  }
   return response.data ? response.data : response.response.data
 }
 
