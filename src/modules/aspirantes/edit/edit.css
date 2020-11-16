@@ -1,10 +1,11 @@
 .card-container-edit {
   display: grid;
   grid-auto-columns: 35% 63%;
-  grid-auto-rows: 17% 81%;
+  grid-auto-rows: 17% 60 21%;
   grid-template-areas:
     "name name"
-    "zone points";
+    "zone points"
+    "zone down";
   grid-gap: 2%;
 }
 
@@ -16,6 +17,13 @@
 }
 .card-zone {
   grid-area: zone;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 5%;
+}
+.card-down {
+  grid-area: down;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -39,7 +47,7 @@
 }
 .total-points {
   width: 100%;
-  height: 55%;
+  height: 20%;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -49,4 +57,7 @@
 }
 .txt-color-gray > span {
   color: black;
+}
+.txt-reason-down {
+  width: 100%;
 }

@@ -10,9 +10,6 @@
   width: 100%;
   font-weight: bold;
 }
-.container-list-order {
-}
-
 .tbl-list-order > div > div > div > table > thead > tr > th {
   border: 2px solid black;
   color: black !important;
@@ -50,6 +47,7 @@
 .container-forms {
   height: 50%;
   display: flex;
+  width: 100%;
   justify-content: space-evenly;
   align-items: center;
   flex-flow: wrap;

@@ -20,6 +20,7 @@ export default function PaginatedTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(props.rowsPerPage);
   const [value, setValue] = React.useState("");
+  const [status, setStatus] = React.useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -37,6 +38,10 @@ export default function PaginatedTable(props) {
   const onChange = (e) => {
     setValue(e.target.value)
   }
+  const onChangeStatus = (e) => {
+    setStatus(e.target.value)
+    props.onSearchByStatus(e.target.value)
+  }
 
   const onSearch = () => {
     props.onSearch(value)
@@ -48,6 +53,16 @@ export default function PaginatedTable(props) {
   return (
     <div>
       <div className="title-table">{props.title}
+        {props.onSearchByStatus &&
+          <select name="select" id="bystatus" className="txt-select" value={status}
+            onChange={onChangeStatus}>
+            {[{ value: "", label: "Todos", selected: true }, { value: "ACTIVO", label: "Activo" }, { value: "INACTIVO", label: "Inactivo" }].map((option) => (
+              <option key={option.value} value={option.value} selected={option.selected}>
+                {option.label}
+              </option>
+            ))}
+          </select>}
+
         {props.onSearch && <div component="form" className="paper-ipt">
           <InputBase
             className=""
@@ -64,6 +79,7 @@ export default function PaginatedTable(props) {
           </IconButton>
 
         </div>}
+
       </div>
       <br />
       <div>

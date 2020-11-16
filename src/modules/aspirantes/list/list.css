@@ -16,6 +16,12 @@
   font-weight: 500 !important;
   border: none !important;
 }
+.btn-red {
+  background: red !important;
+  color: white !important;
+  font-weight: 500 !important;
+  border: none !important;
+}
 #dialog-reason > div:nth-child(3) > div:nth-child(1) {
   width: 40%;
 }
@@ -60,4 +66,7 @@
 .forms-group {
   display: flex;
   justify-content: center;
+}
+.p30 {
+  padding-left: 30%;
 }

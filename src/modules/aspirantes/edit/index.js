@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import SelectMenu from '../../../components/Select';
-import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas, getFolio, editAspirante } from "../../actions";
+import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas, getFolio, editAspirante, handleSnackbar } from "../../actions";
 import { connect } from 'react-redux';
 import { numericCharacters, camelizeString } from "../../../utils"
 import moment from 'moment';
@@ -10,7 +10,7 @@ import { GUARDAR_OTRO_A, EDITAR_AGAIN_A } from '../../../constants';
 
 import "./edit.css"
 
-const initialState = { folio: "", id: false, birthday: "", maternal: "", paternal: "", name: "", studies: "", branch: "", position: "", zone: "", list: "", scholarship: 0, relationship: 0, registry: 0, service: 0 }
+const initialState = { folio: "", id: false, birthday: "", maternal: "", paternal: "", name: "", studies: "", branch: "", position: "", zone: "", reason: "", list: "", scholarship: 0, relationship: 0, registry: 0, service: 0 }
 
 class Edit extends Component {
   state = {
@@ -35,18 +35,14 @@ class Edit extends Component {
     await this.props.getRamas();
     await this.props.getZonas();
     this.setState({ loading: false })
-
-
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-
     const { aspirante } = nextProps
     if (this.props.aspirante !== aspirante && aspirante && aspirante.data && aspirante.status === 200) {
-      const { puntaje: { escolaridad, tiempoServicio, tiempoRegistro, parentesco }, id, estatus, folio, fecha, apellidoPaterno, nombre, apellidoMaterno, idEstudios, idRama, idPuesto, idZona, listado } = aspirante.data;
+      const { puntaje: { escolaridad, tiempoServicio, tiempoRegistro, parentesco }, id, motivo_baja, estatus, folio, fecha, apellidoPaterno, nombre, apellidoMaterno, idEstudios, idRama, idPuesto, idZona, listado } = aspirante.data;
       this.setState({
-        folio: folio, estatus, id: parseInt(id), birthday: moment(fecha).format("YYYY-MM-DD"), name: nombre, maternal: apellidoMaterno, paternal: apellidoPaterno, studies: idEstudios, branch: idRama, position: idPuesto, zone: idZona, list: listado, scholarship: escolaridad, relationship: parentesco, registry: tiempoRegistro, service: tiempoServicio
+        folio: folio, reason: motivo_baja, estatus, id: parseInt(id), birthday: moment(fecha).format("YYYY-MM-DD"), name: nombre, maternal: apellidoMaterno, paternal: apellidoPaterno, studies: idEstudios, branch: idRama, position: idPuesto, zone: idZona, list: listado, scholarship: escolaridad, relationship: parentesco, registry: tiempoRegistro, service: tiempoServicio
       });
     }
 
@@ -56,7 +52,7 @@ class Edit extends Component {
   }
 
   saveAspirante = async () => {
-    const { folio, birthday, estatus, name, maternal, id, paternal, studies, branch, position, zone, list, scholarship, relationship, registry, service } = this.state;
+    const { folio, birthday, estatus, name, maternal, reason, id, paternal, studies, branch, position, zone, list, scholarship, relationship, registry, service } = this.state;
     const data = {
       aspirante: {
         id: id || null,
@@ -70,7 +66,8 @@ class Edit extends Component {
         apellidoMaterno: camelizeString(maternal),
         listado: list,
         fecha: birthday,
-        estatus
+        estatus,
+        motivo_baja: reason
       },
       puntaje: {
         escolaridad: scholarship,
@@ -106,8 +103,19 @@ class Edit extends Component {
     this.props.history.push("/home");
   }
 
+  removeAspirant = async () => {
+    const data = {
+      aspirante: {
+        id: this.state.id, motivo_baja: this.state.reason, estatus: "INACTIVO"
+      }
+    }
+    const response = await this.props.editAspirante(data.aspirante)
+    this.props.handleSnackbar({ message: response.message, type: response.status === 200 ? "success" : "error", open: true })
+    await getAspiranteById(this.state.id);
+  }
+
   render() {
-    const { folio, birthday, name, paternal, maternal, studies, branch, position, zone, list, isSave, scholarship, relationship, registry, service, loading } = this.state;
+    const { folio, birthday, name, paternal, maternal, studies, branch, position, zone, list, isSave, scholarship, relationship, registry, service, loading, reason } = this.state;
     const { estudios, ramas, puestos, zonas } = this.props;
     const total = parseInt(scholarship) + parseInt(registry) + parseInt(service) + parseInt(relationship)
 
@@ -150,6 +158,10 @@ class Edit extends Component {
             <TextField id="service" className="txt-ponts" onChange={this.handleChange} value={service} label="Tiempo de registro" variant="filled" onKeyPress={numericCharacters} />
             <div className="total-points txt-color-gray" >Total:<span>{total}</span></div>
           </div>
+          {this.props.match.params && this.props.match.params.id && <div className="card card-down">
+            <TextField id="reason" className="v" onChange={this.handleChange} value={reason} label="Motivo de baja" variant="filled" />
+            <Button variant="outlined" color="primary" onClick={this.removeAspirant} className="btn-red" >Dar de baja al aspirante      </Button></div>
+          }
         </div>
         <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.closeSave} agreeClick={this.goToHome} btnAgree="Ir a listado" btnNoAgree="Permanecer en la pantalla">
           {isSave.message}
@@ -176,6 +188,7 @@ const mapDispatchToProps = dispatch => {
     getPuestos: () => { return getPuestos()(dispatch) },
     getZonas: () => { return getZonas()(dispatch) },
     getFolio: () => { return getFolio()(dispatch) },
+    handleSnackbar: (props) => { handleSnackbar(props)(dispatch) },
   }
 }
 export default connect(

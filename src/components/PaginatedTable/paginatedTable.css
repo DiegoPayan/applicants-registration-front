@@ -11,3 +11,19 @@
   padding-left: 1%;
   background: #e8e8e8 !important;
 }
+.txt-select,
+.txt-select:focus {
+  height: 2.5rem;
+  font-size: 1rem;
+  width: 25%;
+  background: #e8e8e8;
+  border: none;
+  outline: none;
+  background-image: url("../../images/25629.svg");
+  appearance: none;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.65em auto, 100%;
+  padding-left: 8px;
+  background-repeat: no-repeat;
+  margin-left: 45%;
+}
