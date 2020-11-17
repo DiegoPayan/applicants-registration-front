@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function AlertDialog({ id, open, title, noAgreeClick, agreeClick, btnAgree, btnNoAgree, children }) {
+export default function AlertDialog({ id, open, title, noAgreeClick, disableAgree, agreeClick, btnAgree, btnNoAgree, children }) {
     return (
         <Dialog
             open={open}
@@ -20,10 +20,10 @@ export default function AlertDialog({ id, open, title, noAgreeClick, agreeClick,
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={noAgreeClick} color="primary">
+                {btnNoAgree && <Button onClick={noAgreeClick} color="primary">
                     {btnNoAgree}
-                </Button>
-                <Button onClick={agreeClick} color="primary" autoFocus>
+                </Button>}
+                <Button disabled={disableAgree} onClick={agreeClick} color="primary" autoFocus>
                     {btnAgree}
                 </Button>
             </DialogActions>

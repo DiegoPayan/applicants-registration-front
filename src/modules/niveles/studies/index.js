@@ -113,10 +113,10 @@ class StudiesList extends Component {
                         paginated
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />
                 </div>
-                <AlertDialog id="dialog-reason" open={Boolean(studyId)} title={`${!isNaN(studyId) ? "Editar" : "Agregar"} Nivel de estudio`} noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Guardar" btnNoAgree="Cancelar">
+                <AlertDialog id="dialog-reason" open={Boolean(studyId)} title={`${!isNaN(studyId) ? "Editar" : "Agregar"} Nivel de estudio`} disableAgree={!study.trim().length} noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Guardar" btnNoAgree="Cancelar">
                     <TextField variant="filled" className="txt-reason" id="study" label="Nivel de estudio" value={study} onChange={(e) => this.setState({ study: e.target.value })} />
                 </AlertDialog>
-                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} noAgreeClick={this.keepInList} agreeClick={this.remove} btnAgree="Aceptar" btnNoAgree="Cancelar">
+                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} agreeClick={this.keepInList} btnAgree="Aceptar" >
                 </AlertDialog>
             </Fragment >
         );
