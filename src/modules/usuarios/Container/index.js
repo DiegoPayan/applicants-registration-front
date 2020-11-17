@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
-import ListA from '@material-ui/icons/List';
 import Person from '@material-ui/icons/Person';
 import Puesto from '@material-ui/icons/AssignmentInd';
 import Log from '@material-ui/icons/Assignment';

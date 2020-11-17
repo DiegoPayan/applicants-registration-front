@@ -3,7 +3,6 @@ import List from './modules/aspirantes/list';
 import StudiesList from './modules/niveles/studies';
 import BranchesList from './modules/niveles/branch';
 import PositionsList from './modules/niveles/position';
-import Download from './modules/aspirantes/download';
 import Configuracion from './modules/configuracion';
 import Historial from './modules/usuarios/history';
 
