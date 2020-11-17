@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Button, TextField } from '@material-ui/core';
-import SelectMenu from '../../../components/Select';
+import SelectMenu from '../../../components/Select/';
 import { getAspiranteById, saveAspirante, getRamas, getEstudios, getPuestos, getZonas, getFolio, editAspirante, handleSnackbar } from "../../actions";
 import { connect } from 'react-redux';
 import { numericCharacters, camelizeString } from "../../../utils"
