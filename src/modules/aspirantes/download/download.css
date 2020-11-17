@@ -45,12 +45,11 @@
 }
 
 .container-forms {
-  height: 50%;
-  display: flex;
   width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
+  display: flex;
+  height: 100%;
   flex-flow: wrap;
+  justify-content: center;
 }
 
 .icon-close {
@@ -62,5 +61,5 @@
   font-weight: bold;
 }
 .form-download {
-  width: 40%;
+  width: 50%;
 }

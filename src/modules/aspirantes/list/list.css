@@ -56,8 +56,8 @@
 }
 
 .container-buttons-download {
-  width: 100%;
-  height: 50%;
+  width: 60%;
+  height: 25%;
   padding: 3% 20%;
   justify-content: space-evenly;
   display: flex;

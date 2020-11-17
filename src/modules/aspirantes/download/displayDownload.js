@@ -3,6 +3,7 @@ import React from 'react';
 import PaginatedTable from '../../../components/PaginatedTable';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Close';
+import "./download.css";
 
 export function Preview({ aspirantes, handleClose, type }) {
 

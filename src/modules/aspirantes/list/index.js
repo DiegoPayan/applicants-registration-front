@@ -24,8 +24,8 @@ class List extends Component {
         aspirantes: [],
         removeId: false,
         reason: "",
-        tl: "",
-        sc: "",
+        tl: "puntuacion",
+        sc: "DELEGACION",
         value: "",
         openPreview: false
     }
