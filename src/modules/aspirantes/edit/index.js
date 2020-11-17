@@ -82,6 +82,7 @@ class Edit extends Component {
 
     if (match.params && match.params.id) {
       save = await this.props.editAspirante(data.aspirante);
+      await getAspiranteById(match.params.id);
     } else {
       save = await this.props.saveAspirante(data)
     }
