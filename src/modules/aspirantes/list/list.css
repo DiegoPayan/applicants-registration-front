@@ -16,6 +16,18 @@
   font-weight: 500 !important;
   border: none !important;
 }
+.btn-action:disabled {
+  background: #e8e8e8 !important;
+  color: gray !important;
+  font-weight: 500 !important;
+  border: none !important;
+}
+.btn-normal:disabled {
+  background: #e8e8e8 !important;
+  color: gray !important;
+  font-weight: 500 !important;
+  border: none !important;
+}
 .btn-red {
   background: red !important;
   color: white !important;
@@ -69,4 +81,8 @@
 }
 .p30 {
   padding-left: 30%;
+}
+
+.txt-start {
+  text-align: start;
 }

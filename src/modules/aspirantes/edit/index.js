@@ -67,7 +67,6 @@ class Edit extends Component {
         listado: list,
         fecha: birthday,
         estatus,
-        motivo_baja: reason
       },
       puntaje: {
         escolaridad: scholarship,
@@ -114,19 +113,23 @@ class Edit extends Component {
     this.props.handleSnackbar({ message: response.message, type: response.status === 200 ? "success" : "error", open: true })
     await getAspiranteById(this.state.id);
   }
-
+  checkEmpty = (array) => {
+    return array.every(item => item.toString().trim().length > 0)
+  }
   render() {
-    const { folio, birthday, name, paternal, maternal, studies, branch, position, zone, list, isSave, scholarship, relationship, registry, service, loading, reason } = this.state;
+    const { folio, birthday, name, paternal, maternal, studies, branch, position, zone, list, isSave, scholarship, relationship, registry, service, reason } = this.state;
     const { estudios, ramas, puestos, zonas } = this.props;
-    const total = parseInt(scholarship) + parseInt(registry) + parseInt(service) + parseInt(relationship)
+    const total = parseInt(scholarship || 0) + parseInt(registry || 0) + parseInt(service || 0) + parseInt(relationship || 0)
+    const areEmpty = this.checkEmpty([folio, birthday, name, paternal, studies, branch, position, zone, list, scholarship, relationship, registry, service])
 
     return (
       <Fragment>
         <div className="container-btn-action">
-          <Button variant="outlined" color="primary" onClick={this.saveAspirante} className="btn-action" >Guardar aspirante      </Button></div>
+          <Button variant="outlined" color="primary" onClick={this.saveAspirante} disabled={!areEmpty} className="btn-action" >Guardar aspirante      </Button></div>
         <div className="card-container-edit card-container">
           <div className="card card-name">
-            <TextField id="folio" label="Folio" value={folio} onChange={this.handleChange} variant="filled" />
+            <TextField id="folio" className="txt-start"
+              label="Folio" value={folio} onChange={this.handleChange} variant="filled" />
             <TextField
               id="birthday"
               label="Fecha de ingreso"
@@ -134,22 +137,22 @@ class Edit extends Component {
               type="date"
               onChange={this.handleChange}
               value={birthday}
-              className=""
+              className="txt-start"
               InputLabelProps={{
                 shrink: true,
               }}
             />
-            <TextField id="name" className="" value={name} label="Nombre(s)" onChange={this.handleChange} variant="filled" />
-            <TextField id="paternal" className="" value={paternal} label="Apellido paterno" onChange={this.handleChange} variant="filled" />
-            <TextField id="maternal" className="" value={maternal} label="Apellido materno" onChange={this.handleChange} variant="filled" />
+            <TextField id="name" className="txt-start" value={name} label="Nombre(s)" onChange={this.handleChange} variant="filled" />
+            <TextField id="paternal" className="txt-start" value={paternal} label="Apellido paterno" onChange={this.handleChange} variant="filled" />
+            <TextField id="maternal" className="txt-start" value={maternal} label="Apellido materno" onChange={this.handleChange} variant="filled" />
 
           </div>
           <div className="card card-zone">
-            <SelectMenu items={estudios && estudios.data || []} className="" value={studies} onChange={this.handleChange} label="Nivel de estudios" id="studies" />
-            <SelectMenu items={ramas && ramas.data || []} className="" value={branch} onChange={this.handleChange} label="Rama" id="branch" />
-            <SelectMenu items={puestos && puestos.data || []} className="" value={position} onChange={this.handleChange} label="Puesto" id="position" />
-            <SelectMenu items={zonas && zonas.data || []} className="" value={zone} onChange={this.handleChange} label="Zona" id="zone" />
-            <SelectMenu items={[{ id: "INSTITUTO", nombre: "INSTITUTO" }, { id: "SINDICATO", nombre: "SINDICATO" }]} className="" value={list} onChange={this.handleChange} label="Listado" id="list" />
+            <SelectMenu items={estudios && estudios.data || []} className="txt-start" value={studies} onChange={this.handleChange} label="Nivel de estudios" id="studies" />
+            <SelectMenu items={ramas && ramas.data || []} className="txt-start" value={branch} onChange={this.handleChange} label="Rama" id="branch" />
+            <SelectMenu items={puestos && puestos.data || []} className="txt-start" value={position} onChange={this.handleChange} label="Puesto" id="position" />
+            <SelectMenu items={zonas && zonas.data || []} className="txt-start" value={zone} onChange={this.handleChange} label="Zona" id="zone" />
+            <SelectMenu items={[{ id: "INSTITUTO", nombre: "INSTITUTO" }, { id: "SINDICATO", nombre: "SINDICATO" }]} className="txt-start" value={list} onChange={this.handleChange} label="Listado" id="list" />
 
           </div>
           <div className="card card-points">
@@ -157,7 +160,7 @@ class Edit extends Component {
             <TextField id="relationship" className="txt-ponts" onChange={this.handleChange} value={relationship} label="Parentesco" variant="filled" onKeyPress={numericCharacters} />
             <TextField id="registry" className="txt-ponts" onChange={this.handleChange} value={registry} label="Tiempo de servicio" variant="filled" onKeyPress={numericCharacters} />
             <TextField id="service" className="txt-ponts" onChange={this.handleChange} value={service} label="Tiempo de registro" variant="filled" onKeyPress={numericCharacters} />
-            <div className="total-points txt-color-gray" >Total:<span>{total}</span></div>
+            <div className="total-points txt-color-gray" >Total: &emsp;<span>{total}</span></div>
           </div>
           {this.props.match.params && this.props.match.params.id && <div className="card card-down">
             <TextField id="reason" className="v" onChange={this.handleChange} value={reason} label="Motivo de baja" variant="filled" />

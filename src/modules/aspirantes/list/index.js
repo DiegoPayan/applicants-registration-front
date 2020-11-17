@@ -45,7 +45,7 @@ class List extends Component {
             aspirante.zona = aspirante.zona.nombre;
             aspirante.fecha = moment(aspirante.fecha).format('L');
             aspirante.editar = <Edit />;
-            aspirante.eliminar = <Remove />
+            aspirante.eliminar = aspirante.estatus === "ACTIVO" ? <Remove /> : ""
             return aspirante
         })
         this.setState({ loading: false, aspirantes });
@@ -129,7 +129,7 @@ class List extends Component {
                                 </FormControl>
                                 <div className="container-buttons-download">
                                     <Button variant="outlined" disabled={tl === "" && sc === ""} color="primary" onClick={this.getList} className="btn-normal"  >Generar lista      </Button>
-                                    <Button variant="outlined" color="primary" disabled={tl === "" && sc === "" && !aspirantesDescarga} onClick={this.handlePreview} className="btn-normal"  >Vista previa      </Button>
+                                    <Button variant="outlined" color="primary" disabled={!(aspirantesDescarga && aspirantesDescarga.data && Array.isArray(aspirantesDescarga.data))} onClick={this.handlePreview} className="btn-normal"  >Vista previa      </Button>
                                     <Button variant="outlined" color="primary" disabled={tl === "" && sc === "" && !aspirantes} onClick={() => { this.props.download(sc, tl); }} className="btn-normal"  >Descargar      </Button>
                                 </div>
                             </div>
@@ -141,14 +141,14 @@ class List extends Component {
                         onSearchByStatus={this.onSearchByStatus}
                         data={aspirantes}
                         paginated
-                        columns={[{ id: "folio", label: "Folio" }, { id: "fecha", label: "Fecha" }, { id: "nombre", label: "Nombre" }, { id: "rama", label: "Rama" }, { id: "zona", label: "Zona" }, { id: "puesto", label: "Puesto" }, { id: "listado", label: "Listado" }, { id: "editar", label: "", onClick: (e) => { this.props.history.push(`/editar/aspirante/${e.id}`) } }, { id: "eliminar", label: "", onClick: (e) => { this.closeRemove(e) } }]} />
+                        columns={[{ id: "folio", label: "Folio" }, { id: "fecha", label: "Fecha" }, { id: "nombre", label: "Nombre" }, { id: "rama", label: "Rama" }, { id: "zona", label: "Zona" }, { id: "puesto", label: "Puesto" }, { id: "listado", label: "Listado" }, { id: "editar", label: "", onClick: (e) => { this.props.history.push(`/editar/aspirante/${e.id}`) } }, { id: "eliminar", label: "", onClick: (e) => { if (e.estatus === "ACTIVO") { this.closeRemove(e) } } }]} />
                 </div>
                 <AlertDialog id="dialog-reason" open={Boolean(removeId)} title="Motivo de baja" noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Dar de baja" btnNoAgree="Cancelar">
                     <TextField variant="filled" className="txt-reason" id="standard-basic" label="Motivo" value={reason} onChange={(e) => this.setState({ reason: e.target.value })} />
                 </AlertDialog>
                 {this.state.openPreview && <Preview
                     handleClose={this.handlePreview}
-                    aspirantes={this.props.downloadList}
+                    aspirantes={this.props.aspirantesDescarga}
                     type={tl}
                 />}
             </Fragment>
@@ -157,7 +157,7 @@ class List extends Component {
 }
 const mapStateToProps = (state) => ({
     aspirantes: state.usuarios.aspirantes,
-    downloadList: state.usuarios.aspirantesDescarga
+    aspirantesDescarga: state.usuarios.aspirantesDescarga
 })
 const mapDispatchToProps = dispatch => {
     return {
