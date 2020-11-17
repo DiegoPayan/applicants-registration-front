@@ -65,12 +65,6 @@ const routes = [
         arrow: "/home"
     },
     {
-        name: "Descargar Listado",
-        id: "Descarga",
-        path: "/descarga/listado",
-        component: Download,
-        arrow: "/home"
-    }, {
         name: "Historial",
         id: "Historial",
         path: "/historial",
