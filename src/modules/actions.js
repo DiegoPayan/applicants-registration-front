@@ -60,7 +60,7 @@ export const saveAspirante = (aspirante) => async () => {
 export const editAspirante = (aspirante) => async () => {
   let response;
   try {
-    response = await axios.put(`/api/aspirantes/${aspirante.id}`, { aspirante }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
+    response = await axios.put(`/api/aspirantes/${aspirante.aspirante.id}`, { ...aspirante }, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }

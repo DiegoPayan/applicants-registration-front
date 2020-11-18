@@ -29,8 +29,6 @@ const Container = (props) => {
 
   useEffect(() => {
     const ruta = routes.filter(item => item.path === window.location.pathname.replace(/\d+/g, ":id"));
-    console.log(ruta);
-
     setTitle(ruta[0] ? ruta[0].name : "")
     setSelected(ruta[0] ? ruta[0].id : "")
     setArrow(ruta[0] ? ruta[0].arrow || false : "")

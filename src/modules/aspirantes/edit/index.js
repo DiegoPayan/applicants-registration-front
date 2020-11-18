@@ -80,7 +80,7 @@ class Edit extends Component {
     const { match } = this.props;
 
     if (match.params && match.params.id) {
-      save = await this.props.editAspirante(data.aspirante);
+      save = await this.props.editAspirante(data);
       await getAspiranteById(match.params.id);
     } else {
       save = await this.props.saveAspirante(data)
@@ -104,12 +104,26 @@ class Edit extends Component {
   }
 
   removeAspirant = async () => {
+    const a = this.props.aspirante.data
     const data = {
       aspirante: {
-        id: this.state.id, motivo_baja: this.state.reason, estatus: "INACTIVO"
-      }
+        id: a.id || null,
+        folio: a.folio,
+        idEstudios: a.idEstudios,
+        idRama: a.idRama,
+        idPuesto: a.idPuesto,
+        idZona: a.idZona,
+        nombre: a.nombre,
+        apellidoPaterno: a.apellidoPaterno,
+        apellidoMaterno: a.apellidoMaterno,
+        listado: a.listado,
+        fecha: a.fecha,
+        motivo_baja: this.state.reason,
+        estatus: "INACTIVO"
+      },
+      puntaje: a.puntaje
     }
-    const response = await this.props.editAspirante(data.aspirante)
+    const response = await this.props.editAspirante(data)
     this.props.handleSnackbar({ message: response.message, type: response.status === 200 ? "success" : "error", open: true })
     await getAspiranteById(this.state.id);
   }

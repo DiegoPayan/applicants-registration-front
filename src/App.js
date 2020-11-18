@@ -61,8 +61,6 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.usuarios);
-
   return ({
     snackbar: state.usuarios.snackbar,
     loading: state.usuarios.loading

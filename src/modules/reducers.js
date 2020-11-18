@@ -70,8 +70,6 @@ const usuarios = (state, action) => {
         snackbar: action.data
       });
     case types.HANDLE_LOADING:
-      console.log(action);
-
       return Object.assign({}, state, {
         loading: action.data
       });
