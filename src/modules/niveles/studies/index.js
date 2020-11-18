@@ -116,7 +116,7 @@ class StudiesList extends Component {
                 <AlertDialog id="dialog-reason" open={Boolean(studyId)} title={`${!isNaN(studyId) ? "Editar" : "Agregar"} Nivel de estudio`} disableAgree={!study.trim().length} noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Guardar" btnNoAgree="Cancelar">
                     <TextField variant="filled" className="txt-reason" id="study" label="Nivel de estudio" value={study} onChange={(e) => this.setState({ study: e.target.value })} />
                 </AlertDialog>
-                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} agreeClick={this.keepInList} btnAgree="Aceptar" >
+                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} agreeClick={this.remove} btnAgree="Aceptar" >
                 </AlertDialog>
             </Fragment >
         );

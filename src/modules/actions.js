@@ -77,10 +77,10 @@ export const deregisterAspirante = (aspirante) => async () => {
 }
 
 
-export const getRamas = () => async dispatch => {
+export const getRamas = (status = "") => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/ramas/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
+    response = await axios.get(`/api/ramas${status}`, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -111,10 +111,10 @@ export const updateRama = (id, rama) => async () => {
   return response.data ? response.data : response.response.data
 }
 
-export const getEstudios = () => async dispatch => {
+export const getEstudios = (status = "") => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/estudios/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
+    response = await axios.get(`/api/estudios${status}`, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }
@@ -146,10 +146,10 @@ export const updateEstudio = (id, estudio) => async () => {
   return response.data ? response.data : response.response.data
 }
 
-export const getPuestos = () => async dispatch => {
+export const getPuestos = (status = "") => async dispatch => {
   let response;
   try {
-    response = await axios.get('/api/puestos/', { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
+    response = await axios.get(`/api/puestos${status}`, { headers: { 'Authorization': `${sessionStorage.getItem("token")}` } });
   } catch (error) {
     response = error
   }

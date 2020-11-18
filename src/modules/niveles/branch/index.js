@@ -111,9 +111,9 @@ class BranchesList extends Component {
                         columns={[{ id: "id", label: "ID" }, { id: "nombre", label: "Nombre", width: "70%" }, { id: "estatus", label: "Estatus" }, { id: "editar", label: "", onClick: (e) => { this.closeRemove(e) } }, { id: "eliminar", label: "", onClick: (e) => { this.disableLevel(e) } }]} />
                 </div>
                 <AlertDialog id="dialog-reason" disableAgree={!branch.trim().length} open={Boolean(branchId)} title={`${!isNaN(branchId) ? "Editar" : "Agregar"} Ramas`} noAgreeClick={this.closeRemove} agreeClick={this.removeAspirant} btnAgree="Guardar" btnNoAgree="Cancelar">
-                    <TextField variant="filled" className="txt-reason" id="branch" label="Nivel de estudio" value={branch} onChange={(e) => this.setState({ branch: e.target.value })} />
+                    <TextField variant="filled" className="txt-reason" id="branch" label="Rama" value={branch} onChange={(e) => this.setState({ branch: e.target.value })} />
                 </AlertDialog>
-                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} agreeClick={this.keepInList} btnAgree="Aceptar">
+                <AlertDialog id="dialog-reason" open={Boolean(isSave)} title={isSave.title} agreeClick={this.remove} btnAgree="Aceptar">
                 </AlertDialog>
             </Fragment >
         );

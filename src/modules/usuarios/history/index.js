@@ -18,20 +18,16 @@ class Historial extends Component {
         if (this.props.historial !== historial && historial && historial.data) {
 
             if (historial.status === 200) {
+                const newHistorial = historial.data.map(item => {
+                    item.usuario = `${item.usuarios.nombre} ${item.usuarios.apellidoPaterno} ${item.usuarios.apellidoMaterno}`
+                    item.aspirante = `${item.aspirantes.nombre} ${item.aspirantes.apellidoPaterno} ${item.aspirantes.apellidoMaterno}`
+                })
                 this.setState({
                     positions: historial.data
                 });
             }
             this.setState({ loading: false })
         }
-    }
-
-
-    onSearch = (value) => {
-        const positions = this.props.historial.data.filter(position => {
-            return position.nombre.toUpperCase().includes(value.toUpperCase());
-        })
-        this.setState({ positions });
     }
 
     onSearch = (value) => {
@@ -50,7 +46,7 @@ class Historial extends Component {
                         title="Historial"
                         paginated
                         data={positions}
-                        columns={[{ id: "id", label: "idCambio" }, { id: "idUsuario", label: "idUsuario" }, { id: "idAspirante", label: "idAspirante" }, { id: "dato", label: "Cambio" }, { id: "antes", label: "Antes" }, { id: "despues", label: "Después" }]} />
+                        columns={[{ id: "usuario", label: "Usuario" }, { id: "aspirante", label: "Aspirante" }, { id: "dato", label: "Cambio" }, { id: "antes", label: "Antes" }, { id: "despues", label: "Después" }]} />
                 </div>
             </div>
 
